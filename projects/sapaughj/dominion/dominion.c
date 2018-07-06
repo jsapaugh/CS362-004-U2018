@@ -5,6 +5,12 @@
 #include <math.h>
 #include <stdlib.h>
 
+void villageEffect(int currentPlayer, int handPos, struct gameState* state);
+void tributeEffect(int nextPlayer, int tributeRevealedCards[2], int i, int currentPlayer, struct gameState* state);
+void smithyEffect(int i, int currentPlayer, int handPos, struct gameState* state);
+void adventurerEffect(int drawntreasure, int currentPlayer, int cardDrawn, int temphand[MAX_HAND], int z, struct gameState* state);
+void councilRoomEffect(int i, int currentPlayer, int handPos, struct gameState* state);
+
 int compare(const void* a, const void* b) {
   if (*(int*)a > *(int*)b)
     return 1;
@@ -645,7 +651,7 @@ int getCost(int cardNumber)
 
 int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState *state, int handPos, int *bonus)
 {
-  int i;
+  int i = 0;
   int j;
   int k;
   int x;
@@ -655,8 +661,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
   int tributeRevealedCards[2] = {-1, -1};
   int temphand[MAX_HAND];// moved above the if statement
-  int drawntreasure=0;
-  int cardDrawn;
+  int drawntreasure = 0;
+  int cardDrawn = 0;
   int z = 0;// this is the counter for the temp hand
   if (nextPlayer > (state->numPlayers - 1)){
     nextPlayer = 0;
@@ -667,11 +673,23 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card ) 
     {
     case adventurer:
-		adventurerEffect(drawntreasure, currentPlayer, cardDrawn, temphand, z, state);
+		  adventurerEffect(drawntreasure, currentPlayer, cardDrawn, temphand, z, state);
       return 0;
 			
     case council_room:
-		councilRoomEffect(i, currentPlayer, handPos, state);
+		  councilRoomEffect(i, currentPlayer, handPos, state);
+      return 0;
+      
+    case smithy:
+		  smithyEffect(i, currentPlayer, handPos, state);
+      return 0;
+		
+    case village:
+		  villageEffect(currentPlayer, handPos, state);
+      return 0;
+      
+    case tribute:
+		  tributeEffect(nextPlayer, tributeRevealedCards, i, currentPlayer, state);
       return 0;
 			
     case feast:
@@ -787,16 +805,6 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	      break;
 	    }
 	}
-
-
-      return 0;
-		
-    case smithy:
-		smithyEffect(i, currentPlayer, handPos, state);
-      return 0;
-		
-    case village:
-		villageEffect(currentPlayer, handPos, state);
       return 0;
 		
     case baron:
@@ -932,13 +940,9 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 	}
 			
       //discard card from hand
-      discardCard(handPos, currentPlayer, state, 0);
-      return 0;
-		
-    case tribute:
-		tributeEffect(nextPlayer, tributeRevealedCards, i, currentPlayer, state);
-      return 0;
-		
+    discardCard(handPos, currentPlayer, state, 0);
+    return 0;
+    
     case ambassador:
       j = 0;		//used to check if player has enough cards to discard
 
@@ -1120,6 +1124,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 void adventurerEffect(int drawntreasure, int currentPlayer, int cardDrawn,
 		              int temphand[MAX_HAND], int z, struct gameState* state)
 {
+  //initialize variable
+  cardDrawn = 0;
 	while (drawntreasure < 2)
 	{
 		if (state->deckCount[currentPlayer] < 1)
@@ -1247,6 +1253,8 @@ void villageEffect(int currentPlayer, int handPos, struct gameState* state)
 
 void councilRoomEffect(int i, int currentPlayer, int handPos, struct gameState* state)
 {
+  //initialize variable
+  i = 0;
 	//+4 Cards
 	for (i = 0; i < 4; i++)
 	{
