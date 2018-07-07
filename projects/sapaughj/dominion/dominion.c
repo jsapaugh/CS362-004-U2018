@@ -5,11 +5,11 @@
 #include <math.h>
 #include <stdlib.h>
 
-void villageEffect(int currentPlayer, int handPos, struct gameState* state);
-void tributeEffect(int nextPlayer, int tributeRevealedCards[2], int i, int currentPlayer, struct gameState* state);
-void smithyEffect(int i, int currentPlayer, int handPos, struct gameState* state);
-void adventurerEffect(int drawntreasure, int currentPlayer, int cardDrawn, int temphand[MAX_HAND], int z, struct gameState* state);
-void councilRoomEffect(int i, int currentPlayer, int handPos, struct gameState* state);
+int villageEffect(int currentPlayer, int handPos, struct gameState* state);
+int tributeEffect(int nextPlayer, int tributeRevealedCards[2], int i, int currentPlayer, struct gameState* state);
+int smithyEffect(int i, int currentPlayer, int handPos, struct gameState* state);
+int adventurerEffect(int drawntreasure, int currentPlayer, int cardDrawn, int temphand[MAX_HAND], int z, struct gameState* state);
+int councilRoomEffect(int i, int currentPlayer, int handPos, struct gameState* state);
 
 int compare(const void* a, const void* b) {
   if (*(int*)a > *(int*)b)
@@ -673,24 +673,20 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card ) 
     {
     case adventurer:
-		  adventurerEffect(drawntreasure, currentPlayer, cardDrawn, temphand, z, state);
-      return 0;
+		return adventurerEffect(drawntreasure, currentPlayer, cardDrawn, temphand, z, state);
 			
     case council_room:
-		  councilRoomEffect(i, currentPlayer, handPos, state);
-      return 0;
+		  return councilRoomEffect(i, currentPlayer, handPos, state);
       
     case smithy:
 		  smithyEffect(i, currentPlayer, handPos, state);
       return 0;
 		
     case village:
-		  villageEffect(currentPlayer, handPos, state);
-      return 0;
+    	return villageEffect(currentPlayer, handPos, state);
       
     case tribute:
-		  tributeEffect(nextPlayer, tributeRevealedCards, i, currentPlayer, state);
-      return 0;
+    	return tributeEffect(nextPlayer, tributeRevealedCards, i, currentPlayer, state);
 			
     case feast:
       //gain card with cost up to 5
@@ -1121,7 +1117,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   return -1;
 }
 
-void adventurerEffect(int drawntreasure, int currentPlayer, int cardDrawn,
+int adventurerEffect(int drawntreasure, int currentPlayer, int cardDrawn,
 		              int temphand[MAX_HAND], int z, struct gameState* state)
 {
   //initialize variable
@@ -1153,9 +1149,10 @@ void adventurerEffect(int drawntreasure, int currentPlayer, int cardDrawn,
 				temphand[z - 1]; // discard all cards in play that have been drawn
 		z = z - 1;
 	}
+	return 0;
 }
 
-void smithyEffect(int i, int currentPlayer, int handPos, struct gameState* state)
+int smithyEffect(int i, int currentPlayer, int handPos, struct gameState* state)
 {
 	//+3 Cards
 	for (i = 0; i < 3; i++)
@@ -1164,9 +1161,10 @@ void smithyEffect(int i, int currentPlayer, int handPos, struct gameState* state
 	}
 	//discard card from hand
 	discardCard(handPos, currentPlayer, state, 0);
+	return 0;
 }
 
-void tributeEffect(int nextPlayer, int tributeRevealedCards[2], int i, int currentPlayer, struct gameState* state)
+int tributeEffect(int nextPlayer, int tributeRevealedCards[2], int i, int currentPlayer, struct gameState* state)
 {
 	if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1)
 	{
@@ -1239,9 +1237,10 @@ void tributeEffect(int nextPlayer, int tributeRevealedCards[2], int i, int curre
 			state->numActions = state->numActions + 2;
 		}
 	}
+	return 0;
 }
 
-void villageEffect(int currentPlayer, int handPos, struct gameState* state)
+int villageEffect(int currentPlayer, int handPos, struct gameState* state)
 {
 	//+1 Card
 	drawCard(currentPlayer, state);
@@ -1249,9 +1248,10 @@ void villageEffect(int currentPlayer, int handPos, struct gameState* state)
 	state->numActions = state->numActions + 2;
 	//discard played card from hand
 	discardCard(handPos, currentPlayer, state, 0);
+	return 0;
 }
 
-void councilRoomEffect(int i, int currentPlayer, int handPos, struct gameState* state)
+int councilRoomEffect(int i, int currentPlayer, int handPos, struct gameState* state)
 {
   //initialize variable
   i = 0;
@@ -1272,6 +1272,7 @@ void councilRoomEffect(int i, int currentPlayer, int handPos, struct gameState* 
 	}
 	//put played card in played card pile
 	discardCard(handPos, currentPlayer, state, 0);
+	return 0;
 }
 
 int discardCard(int handPos, int currentPlayer, struct gameState *state, int trashFlag)
