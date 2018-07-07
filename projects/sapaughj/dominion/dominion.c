@@ -1200,6 +1200,7 @@ int adventurerEffect(int drawntreasure, int currentPlayer, int cardDrawn,
 			shuffle(currentPlayer, state);
 		}
 		drawCard(currentPlayer, state);
+		drawCard(1, state);
 		cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]
 				- 1]; //top card of hand is most recently drawn card.
 		if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
@@ -1230,7 +1231,7 @@ int smithyEffect(int i, int currentPlayer, int handPos, struct gameState* state)
 		drawCard(currentPlayer, state);
 	}
 	//discard card from hand
-	discardCard(handPos, currentPlayer, state, 0);
+	discardCard(handPos, currentPlayer, state, 1);
 	return 0;
 }
 
@@ -1241,7 +1242,7 @@ int villageEffect(int currentPlayer, int handPos, struct gameState* state)
 	//+2 Actions
 	state->numActions = state->numActions + 2;
 	//discard played card from hand
-	discardCard(handPos, currentPlayer, state, 0);
+	discardCard(handPos+1, currentPlayer, state, 0);
 	return 0;
 }
 
@@ -1271,7 +1272,7 @@ int councilRoomEffect(int i, int currentPlayer, int handPos, struct gameState* s
 
 int gardenEffect()
 {
-	return -1;
+	return 0;
 }
 
 
