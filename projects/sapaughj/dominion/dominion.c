@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 int villageEffect(int currentPlayer, int handPos, struct gameState* state);
-int tributeEffect(int nextPlayer, int tributeRevealedCards[2], int i, int currentPlayer, struct gameState* state);
+int gardenEffect();
 int smithyEffect(int i, int currentPlayer, int handPos, struct gameState* state);
 int adventurerEffect(int drawntreasure, int currentPlayer, int cardDrawn, int temphand[MAX_HAND], int z, struct gameState* state);
 int councilRoomEffect(int i, int currentPlayer, int handPos, struct gameState* state);
@@ -685,7 +685,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
     	return villageEffect(currentPlayer, handPos, state);
 
     case gardens:
-      return -1;
+      return gardenEffect();
       
     case tribute:
     	if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1)
@@ -1268,6 +1268,12 @@ int councilRoomEffect(int i, int currentPlayer, int handPos, struct gameState* s
 	discardCard(handPos, currentPlayer, state, 0);
 	return 0;
 }
+
+int gardenEffect()
+{
+	return -1;
+}
+
 
 int discardCard(int handPos, int currentPlayer, struct gameState *state, int trashFlag)
 {
