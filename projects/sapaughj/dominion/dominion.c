@@ -5,6 +5,7 @@
 #include <math.h>
 #include <stdlib.h>
 
+
 int villageEffect(int currentPlayer, int handPos, struct gameState* state);
 int gardenEffect();
 int smithyEffect(int i, int currentPlayer, int handPos, struct gameState* state);
