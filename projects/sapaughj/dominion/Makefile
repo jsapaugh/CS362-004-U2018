@@ -38,6 +38,9 @@ unittest2: unittest2.c dominion.o rngs.o
 
 unittest3: unittest3.c dominion.o rngs.o
 	gcc -o unittest3 -g unittest3.c dominion.o rngs.o $(CFLAGS)
+	
+unittest3: unittest4.c dominion.o rngs.o
+	gcc -o unittest4 -g unittest4.c dominion.o rngs.o $(CFLAGS)
 
 # my card tests
 cardtest1: cardtest1.c dominion.o rngs.o interface.o
@@ -45,18 +48,27 @@ cardtest1: cardtest1.c dominion.o rngs.o interface.o
 
 cardtest2: cardtest2.c dominion.o rngs.o interface.o
 	gcc -o cardtest2 -g cardtest2.c dominion.o rngs.o interface.o $(CFLAGS)
+	
+cardtest3: cardtest3.c dominion.o rngs.o interface.o
+	gcc -o cardtest3 -g cardtest3.c dominion.o rngs.o interface.o $(CFLAGS)
+	
+cardtest4: cardtest4.c dominion.o rngs.o interface.o
+	gcc -o cardtest4 -g cardtest4.c dominion.o rngs.o interface.o $(CFLAGS)
 
 # rule to compile test results
 unittestresults: unittest1 unittest2 unittest3
 	./unittest1 >> unittestresults.out
 	./unittest2 >> unittestresults.out
 	./unittest3 >> unittestresults.out
+	./unittest4 >> unittestresults.out
 	gcov -b unittest1.c >> unittestresults.out
 	cat unittest1.c.gcov >> unittestresults.out     
 	gcov -b unittest2.c >> unittestresults.out
 	cat unittest2.c.gcov >> unittestresults.out
 	gcov -b unittest3.c >> unittestresults.out
 	cat unittest3.c.gcov >> unittestresults.out
+	gcov -b unittest4.c >> unittestresults.out
+	cat unittest4.c.gcov >> unittestresults.out
 	gcov -b dominion.c >> unittestresults.out
 	cat dominion.c.gcov >> unittestresults.out
 
@@ -66,4 +78,4 @@ player: player.c interface.o
 all: playdom player testDrawCard testBuyCard badTestDrawCard
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe unittest1 unittest2 unittest3
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe unittest1 unittest2 unittest3 unittest4
