@@ -5,18 +5,15 @@
 *          07-18-2018
 */
 
-/*
-function under test
-int whoseTurn(struct gameState *state) {
-  return state->whoseTurn;
-}
-*/
-
 #include "dominion.h"
 #include "dominion_helpers.h"
 #include "rngs.h"
 #include <stdio.h>
 #include <stdlib.h>
+
+/*
+* Testing int whoseTurn(struct gameState *state)
+*/
 
 void assertEquals(int expected, int actual);
 void testWhoseTurn();

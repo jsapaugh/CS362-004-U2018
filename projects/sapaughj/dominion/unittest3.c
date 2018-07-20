@@ -5,15 +5,15 @@
 *          07-18-2018
 */
 
-/*
-* testing int* kingdomCards(..)
-*/
-
 #include "dominion.h"
 #include "dominion_helpers.h"
 #include "rngs.h"
 #include <stdio.h>
 #include <stdlib.h>
+
+/*
+* Testing int* kingdomCards(..)
+*/
 
 void assertEquals(int expected, int actual);
 void testKingdomCards();
@@ -44,6 +44,14 @@ void testKingdomCards()
     for(i = 0; i < 10; i++)
     {
         assertEquals(i,*(k+i));
+    }
+    
+    int* k2 = kingdomCards(3,4,5,8,1,15,2,6,7,25);
+    int* testAgainst[10] = {3,4,5,8,1,15,2,6,7,25};
+    
+    for(i = 0; i < 10; i++)
+    {
+        assertEquals(*(testAgainst+i),*(k2+i));
     }
 }
 
