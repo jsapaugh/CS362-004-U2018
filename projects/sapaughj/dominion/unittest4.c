@@ -11,50 +11,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
-int scoreFor (int player, struct gameState *state) {
-
-  int i;
-  int score = 0;
-  //score from hand
-  for (i = 0; i < state->handCount[player]; i++)
-    {
-      if (state->hand[player][i] == curse) { score = score - 1; };
-      if (state->hand[player][i] == estate) { score = score + 1; };
-      if (state->hand[player][i] == duchy) { score = score + 3; };
-      if (state->hand[player][i] == province) { score = score + 6; };
-      if (state->hand[player][i] == great_hall) { score = score + 1; };
-      if (state->hand[player][i] == gardens) { score = score + ( fullDeckCount(player, 0, state) / 10 ); };
-    }
-
-  //score from discard
-  for (i = 0; i < state->discardCount[player]; i++)
-    {
-      if (state->discard[player][i] == curse) { score = score - 1; };
-      if (state->discard[player][i] == estate) { score = score + 1; };
-      if (state->discard[player][i] == duchy) { score = score + 3; };
-      if (state->discard[player][i] == province) { score = score + 6; };
-      if (state->discard[player][i] == great_hall) { score = score + 1; };
-      if (state->discard[player][i] == gardens) { score = score + ( fullDeckCount(player, 0, state) / 10 ); };
-    }
-
-  //score from deck
-  for (i = 0; i < state->discardCount[player]; i++)
-    {
-      if (state->deck[player][i] == curse) { score = score - 1; };
-      if (state->deck[player][i] == estate) { score = score + 1; };
-      if (state->deck[player][i] == duchy) { score = score + 3; };
-      if (state->deck[player][i] == province) { score = score + 6; };
-      if (state->deck[player][i] == great_hall) { score = score + 1; };
-      if (state->deck[player][i] == gardens) { score = score + ( fullDeckCount(player, 0, state) / 10 ); };
-    }
-
-  return score;
-}
-*/
-
-void assertEquals(int expected, int actual);
+void assertEquals(int expected, int actual, char message[]);
 void testScoreFor();
+
 int main(int argc, char* argv[])
 {
     
@@ -110,8 +69,9 @@ void testScoreFor()
     state.hand[3][1] = estate;
     state.hand[3][2] = estate;
     state.hand[3][3] = estate;
-    state.hand[3][4] = gardens;
-    state.handCount[3] = 5;
+    state.hand[3][4] = estate;
+    state.hand[3][5] = gardens;
+    state.handCount[3] = 6;
     
     state.discard[3][0] = gardens;
     state.discardCount[3] = 1;
@@ -132,31 +92,38 @@ void testScoreFor()
 
     int scoreForPlayerTwo, scoreForPlayerOne, scoreForPlayerThree, scoreForPlayerFour;
     
+    //should be 3
     scoreForPlayerOne = scoreFor(1, &state);
+    //should be 4
     scoreForPlayerTwo = scoreFor(2, &state);
+    //should be 10
     scoreForPlayerThree = scoreFor(3, &state);
+    //should be 3
     scoreForPlayerFour = scoreFor(4, &state);
     
-    // player one point total 3(estate)-1(curse)+1(gardens) = 3
-    assertEquals(3, scoreForPlayerOne);
+    // player one point total 3(estate)-1(curse)+1(gardens 10 cards) = 3
+    assertEquals(3, scoreForPlayerOne, "Testing player one point total");
     // player two point total 4(estate) = 4
-    assertEquals(4, scoreForPlayerTwo);
-    //6x gardens with 10 cards = 6pts+4pts(estates)=10
-    assertEquals(10, scoreForPlayerThree);
+    assertEquals(4, scoreForPlayerTwo, "Testing player two point total");
+    //6pts(6x gardens with 10 cards)+5pts(estates)=10
+    assertEquals(11, scoreForPlayerThree, "Testing player three point total");
     //3 estate cards in deck = 3 points
-    assertEquals(3, scoreForPlayerFour);
+    assertEquals(3, scoreForPlayerFour, "Testing player four point total");
 }
 
-void assertEquals(int expected, int actual)
+void assertEquals(int expected, int actual, char message[])
 {
+    printf("%s\n", message);
+    fflush(stdout);
+    
     if(expected == actual)
     {
-        printf("\t****************TEST SUCCESSFULLY COMPLETED****************\n");
+        printf("****************TEST SUCCESSFULLY COMPLETED****************\n");
         fflush(stdout);
     }
     else
     {
-        printf("\t************************TEST FAILED************************\n");
+        printf("************************TEST FAILED************************\n");
         fflush(stdout);        
     }
 }

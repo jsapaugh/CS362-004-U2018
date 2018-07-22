@@ -39,7 +39,7 @@ void testKingdomCards()
 {
     int* k = kingdomCards(0,1,2,3,4,5,6,7,8,9);
     int i = 0;
-
+    
     for(i = 0; i < 10; i++)
     {
         assertEquals(i,*(k+i));
@@ -58,12 +58,12 @@ void assertEquals(int expected, int actual)
 {
     if(expected == actual)
     {
-        printf("\t****************TEST SUCCESSFULLY COMPLETED****************\n");
+        printf("****************TEST SUCCESSFULLY COMPLETED****************\n");
         fflush(stdout);
     }
     else
     {
-        printf("\t************************TEST FAILED************************\n");
+        printf("************************TEST FAILED************************\n");
         fflush(stdout);        
     }
 }

@@ -43,7 +43,7 @@ void testCostSalvager();
 void testCostSeaHag();
 void testCostTreasureMap();
 void testDefault();
-void assertEquals(int expected, int actual);
+void assertEquals(int expected, int actual, char message[]);
 
 
 int main(int argc, char *argv[])
@@ -90,127 +90,130 @@ int main(int argc, char *argv[])
 
 void testCostCurse()
 {
-    assertEquals(getCost(curse),0);
+    assertEquals(getCost(curse),0, "Testing cost of curse");
 }
 void testCostEstate()
 {
-    assertEquals(getCost(estate),2);
+    assertEquals(getCost(estate),2, "Testing cost of estate");
 }
 void testCostDuchy()
 {
-    assertEquals(getCost(duchy),5);
+    assertEquals(getCost(duchy),5, "Testing cost of duchy");
 }
 void testCostProvince()
 {
-    assertEquals(getCost(province),8);
+    assertEquals(getCost(province),8, "Testing cost of province");
 }
 void testCostCopper()
 {
-    assertEquals(getCost(copper),0);
+    assertEquals(getCost(copper),0, "Testing cost of copper");
 }
 void testCostSilver()
 {
-    assertEquals(getCost(silver),3);
+    assertEquals(getCost(silver),3, "Testing cost of silver");
 }
 void testCostGold()
 {
- assertEquals(getCost(gold),6);   
+ assertEquals(getCost(gold),6, "Testing cost of gold");   
 }
 void testCostAdventurer()
 {
- assertEquals(getCost(adventurer),6);   
+ assertEquals(getCost(adventurer),6, "Testing cost of adventurer");   
 }
 void testCostCouncilRoom()
 {
-    assertEquals(getCost(council_room),5);
+    assertEquals(getCost(council_room),5, "Testing cost of council_room");
 }
 void testCostFeast()
 {
-    assertEquals(getCost(feast),4);
+    assertEquals(getCost(feast),4, "Testing cost of feast");
 }
 void testCostGardens()
 {
-    assertEquals(getCost(gardens),4);    
+    assertEquals(getCost(gardens),4, "Testing cost of gardens");    
 }
 void testCostMine()
 {
-    assertEquals(getCost(mine),5);    
+    assertEquals(getCost(mine),5, "Testing cost of mine");    
 }
 void testCostRemodel()
 {
-    assertEquals(getCost(remodel),4);    
+    assertEquals(getCost(remodel),4, "Testing cost of remodel");    
 }
 void testCostSmithy()
 {
-    assertEquals(getCost(smithy),4);    
+    assertEquals(getCost(smithy),4, "Testing cost of smithy");    
 }
 void testCostVillage()
 {
-    assertEquals(getCost(village),3);    
+    assertEquals(getCost(village),3, "Testing cost of village");    
 }
 void testCostBaron()
 {
-    assertEquals(getCost(baron),4);    
+    assertEquals(getCost(baron),4, "Testing cost of baron");    
 }
 void testCostGreatHall()
 {
-    assertEquals(getCost(great_hall),3);    
+    assertEquals(getCost(great_hall),3, "Testing cost of great_hall");    
 }
 void testCostMinion()
 {
-    assertEquals(getCost(minion),5);    
+    assertEquals(getCost(minion),5, "Testing cost of minion");    
 }
 void testCostSteward()
 {
-    assertEquals(getCost(steward),3);    
+    assertEquals(getCost(steward),3, "Testing cost of steward");    
 }
 void testCostTribute()
 {
-    assertEquals(getCost(tribute),5);    
+    assertEquals(getCost(tribute),5, "Testing cost of tribute");    
 }
 void testCostAmbassador()
 {
-    assertEquals(getCost(ambassador),3);    
+    assertEquals(getCost(ambassador),3, "Testing cost of ambassador");    
 }
 void testCostCutpurse()
 {
-    assertEquals(getCost(cutpurse),4);    
+    assertEquals(getCost(cutpurse),4, "Testing cost of cutpurse");    
 }
 void testCostEmbargo() 
 {
-    assertEquals(getCost(embargo),2);    
+    assertEquals(getCost(embargo),2, "Testing cost of embargo");    
 }
 void testCostOutpost()
 {
-    assertEquals(getCost(outpost),5);    
+    assertEquals(getCost(outpost),5, "Testing cost of outpost");    
 }
 void testCostSalvager()
 {
-    assertEquals(getCost(salvager),4);    
+    assertEquals(getCost(salvager),4, "Testing cost of salvager");    
 }
 void testCostSeaHag()
 {
-    assertEquals(getCost(sea_hag),4);    
+    assertEquals(getCost(sea_hag),4, "Testing cost of sea_hag");    
 }
 void testCostTreasureMap()
 {
-    assertEquals(getCost(treasure_map),4);    
+    assertEquals(getCost(treasure_map),4, "Testing cost of treasure_map");    
 }
 void testDefault()
 {
-    assertEquals(getCost(27),-1);
+    assertEquals(getCost(27),-1, "Testing cost of the default value");
 }
 
-void assertEquals(int expected, int actual)
+void assertEquals(int expected, int actual, char message[])
 {
+    printf("%s\n", message);
+    fflush(stdout);
+    
     if(expected == actual)
     {
-        printf("\t****************TEST SUCCESSFULLY COMPLETED****************\n");
+        printf("****************TEST SUCCESSFULLY COMPLETED****************\n");
         fflush(stdout);
     }
     else
     {
-        printf("\t****************TEST FAILED****************\n");
+        printf("************************TEST FAILED************************\n");
         fflush(stdout);        
     }
 }

@@ -15,7 +15,7 @@
 * Testing int whoseTurn(struct gameState *state)
 */
 
-void assertEquals(int expected, int actual);
+void assertEquals(int expected, int actual, char message []);
 void testWhoseTurn();
 
 int main(int argc, char *argv[])
@@ -46,23 +46,26 @@ void testWhoseTurn()
     
     state.whoseTurn = 0;
     
-    assertEquals(0, whoseTurn(&state));
+    assertEquals(0, whoseTurn(&state), "Testing state for whose turn it is");
     
     state.whoseTurn = 1;
     
-    assertEquals(1, whoseTurn(&state));
+    assertEquals(1, whoseTurn(&state), "Testing state for whose turn it is");
 }
 
-void assertEquals(int expected, int actual)
+void assertEquals(int expected, int actual, char message[])
 {
+    printf("%s\n", message);
+    fflush(stdout);
+    
     if(expected == actual)
     {
-        printf("\t****************TEST SUCCESSFULLY COMPLETED****************\n");
+        printf("****************TEST SUCCESSFULLY COMPLETED****************\n");
         fflush(stdout);
     }
     else
     {
-        printf("\t****************TEST FAILED****************\n");
+        printf("************************TEST FAILED************************\n");
         fflush(stdout);        
     }
 }
