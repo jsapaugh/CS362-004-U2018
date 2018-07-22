@@ -39,7 +39,6 @@ void testKingdomCards()
 {
     int* k = kingdomCards(0,1,2,3,4,5,6,7,8,9);
     int i = 0;
-    int arraySize = (int)(sizeof(k)/sizeof(k[0]));
 
     for(i = 0; i < 10; i++)
     {
@@ -47,11 +46,11 @@ void testKingdomCards()
     }
     
     int* k2 = kingdomCards(3,4,5,8,1,15,2,6,7,25);
-    int* testAgainst[10] = {3,4,5,8,1,15,2,6,7,25};
+    int testAgainst[10] = {3,4,5,8,1,15,2,6,7,25};
     
     for(i = 0; i < 10; i++)
     {
-        assertEquals(*(testAgainst+i),*(k2+i));
+        assertEquals(testAgainst[i],*(k2+i));
     }
 }
 
