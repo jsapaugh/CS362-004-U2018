@@ -1,0 +1,163 @@
+        -:    0:Source:unittest4.c
+        -:    0:Graph:unittest4.gcno
+        -:    0:Data:unittest4.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*
+        -:    2:* Author : Jacob Sapaugh
+        -:    3:*          Oregon State University
+        -:    4:*          CS 362
+        -:    5:*          07-18-2018
+        -:    6:*/
+        -:    7:
+        -:    8:#include "dominion.h"
+        -:    9:#include "dominion_helpers.h"
+        -:   10:#include "rngs.h"
+        -:   11:#include <stdio.h>
+        -:   12:#include <stdlib.h>
+        -:   13:
+        -:   14:void assertEquals(int expected, int actual, char message[]);
+        -:   15:void testScoreFor();
+        -:   16:
+function main called 1 returned 100% blocks executed 100%
+        1:   17:int main(int argc, char* argv[])
+        -:   18:{
+        -:   19:    
+        1:   20:    char functionUnderTest[] = "int scoreFor (int player, struct gameState *state)";
+        1:   21:    printf("__________________________________________________________________\n");
+call    0 returned 100%
+        1:   22:    fflush(stdout);        
+call    0 returned 100%
+        1:   23:    printf("*******Begin testing of %s*******\n",functionUnderTest);
+call    0 returned 100%
+        -:   24:    
+        1:   25:    testScoreFor();
+call    0 returned 100%
+        -:   26:    
+        1:   27:    fflush(stdout);        
+call    0 returned 100%
+        1:   28:    printf("*******End testing of %s*******\n",functionUnderTest);
+call    0 returned 100%
+        1:   29:    fflush(stdout);        
+call    0 returned 100%
+        1:   30:    printf("__________________________________________________________________\n");
+call    0 returned 100%
+        1:   31:    fflush(stdout); 
+call    0 returned 100%
+        -:   32:}
+        -:   33:
+function testScoreFor called 1 returned 100% blocks executed 100%
+        1:   34:void testScoreFor()
+        -:   35:{
+        -:   36:    struct gameState state;
+        1:   37:    int players = 4;
+        1:   38:    int seed = 50;
+        1:   39:    int k[10] = {adventurer, smithy, gardens, embargo, village, steward, mine, cutpurse, outpost, tribute};
+        -:   40:    
+        1:   41:    initializeGame(players, k, seed, &state);
+call    0 returned 100%
+        -:   42:    //player one hand/deck/discard
+        1:   43:    state.hand[1][0] = estate;
+        1:   44:    state.hand[1][1] = estate;
+        1:   45:    state.hand[1][2] = estate;
+        1:   46:    state.handCount[1] = 3;
+        -:   47:    
+        1:   48:    state.discard[1][0] = curse;
+        1:   49:    state.discard[1][1] = gardens;
+        1:   50:    state.discard[1][2] = embargo;
+        1:   51:    state.discard[1][3] = village;
+        1:   52:    state.discard[1][4] = mine;
+        1:   53:    state.discard[1][5] = cutpurse;
+        1:   54:    state.discardCount[1] = 6;
+        -:   55:    
+        1:   56:    state.deck[1][1] = embargo;
+        1:   57:    state.deck[1][2] = smithy;
+        1:   58:    state.deckCount[1] = 2;
+        -:   59:    
+        -:   60:    //player twos hand/deck/discard
+        1:   61:    state.hand[2][0] = estate;
+        1:   62:    state.hand[2][1] = estate;
+        1:   63:    state.hand[2][2] = estate;
+        1:   64:    state.hand[2][3] = estate;
+        1:   65:    state.handCount[2] = 4;
+        -:   66:
+        -:   67:    //player three hand/deck/discard
+        1:   68:    state.hand[3][0] = estate;
+        1:   69:    state.hand[3][1] = estate;
+        1:   70:    state.hand[3][2] = estate;
+        1:   71:    state.hand[3][3] = estate;
+        1:   72:    state.hand[3][4] = estate;
+        1:   73:    state.hand[3][5] = gardens;
+        1:   74:    state.handCount[3] = 6;
+        -:   75:    
+        1:   76:    state.discard[3][0] = gardens;
+        1:   77:    state.discardCount[3] = 1;
+        -:   78:    
+        1:   79:    state.deck[3][0] = gardens;
+        1:   80:    state.deck[3][1] = gardens;
+        1:   81:    state.deck[3][2] = gardens;
+        1:   82:    state.deck[3][3] = gardens;
+        1:   83:    state.deckCount[3] = 4;
+        -:   84:    
+        -:   85:    //player four hand/deck/discard
+        1:   86:    state.deck[4][0] = estate;
+        1:   87:    state.deck[4][1] = estate;
+        1:   88:    state.deck[4][2] = estate;
+        1:   89:    state.deckCount[4] = 3;
+        1:   90:    state.discardCount[4] = 0;
+        1:   91:    state.handCount[4] = 0;
+        -:   92:
+        -:   93:    int scoreForPlayerTwo, scoreForPlayerOne, scoreForPlayerThree, scoreForPlayerFour;
+        -:   94:    
+        -:   95:    //should be 3
+        1:   96:    scoreForPlayerOne = scoreFor(1, &state);
+call    0 returned 100%
+        -:   97:    //should be 4
+        1:   98:    scoreForPlayerTwo = scoreFor(2, &state);
+call    0 returned 100%
+        -:   99:    //should be 10
+        1:  100:    scoreForPlayerThree = scoreFor(3, &state);
+call    0 returned 100%
+        -:  101:    //should be 3
+        1:  102:    scoreForPlayerFour = scoreFor(4, &state);
+call    0 returned 100%
+        -:  103:    
+        -:  104:    // player one point total 3(estate)-1(curse)+1(gardens 10 cards) = 3
+        1:  105:    assertEquals(3, scoreForPlayerOne, "Testing player one point total");
+call    0 returned 100%
+        -:  106:    // player two point total 4(estate) = 4
+        1:  107:    assertEquals(4, scoreForPlayerTwo, "Testing player two point total");
+call    0 returned 100%
+        -:  108:    //6pts(6x gardens with 10 cards)+5pts(estates)=10
+        1:  109:    assertEquals(11, scoreForPlayerThree, "Testing player three point total");
+call    0 returned 100%
+        -:  110:    //3 estate cards in deck = 3 points
+        1:  111:    assertEquals(3, scoreForPlayerFour, "Testing player four point total");
+call    0 returned 100%
+        1:  112:}
+        -:  113:
+function assertEquals called 4 returned 100% blocks executed 100%
+        4:  114:void assertEquals(int expected, int actual, char message[])
+        -:  115:{
+        4:  116:    printf("%s\n", message);
+call    0 returned 100%
+        4:  117:    fflush(stdout);
+call    0 returned 100%
+        -:  118:    
+        4:  119:    if(expected == actual)
+branch  0 taken 25% (fallthrough)
+branch  1 taken 75%
+        -:  120:    {
+        1:  121:        printf("****************TEST SUCCESSFULLY COMPLETED****************\n");
+call    0 returned 100%
+        1:  122:        fflush(stdout);
+call    0 returned 100%
+        -:  123:    }
+        -:  124:    else
+        -:  125:    {
+        3:  126:        printf("************************TEST FAILED************************\n");
+call    0 returned 100%
+        3:  127:        fflush(stdout);        
+call    0 returned 100%
+        -:  128:    }
+        4:  129:}
