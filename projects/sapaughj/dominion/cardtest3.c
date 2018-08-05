@@ -14,7 +14,7 @@
 
 void assertEquals(int expected, int actual, char message[]);
 void assertTrue(int value);
-void testSmithy();
+void testVillage();
 
 int main(int argc, char* argv[]) 
 {
@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     printf("*******Begin testing of %s*******\n",functionUnderTest);
     fflush(stdout);        
     
-    testSmithy();
+    testVillage();
     
     printf("*******End testing of %s*******\n",functionUnderTest);
     fflush(stdout);        
@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-void testSmithy()
+void testVillage()
 {
     struct gameState state;
     int players = 3;

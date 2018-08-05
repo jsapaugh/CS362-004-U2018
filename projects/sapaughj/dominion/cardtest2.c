@@ -13,7 +13,7 @@
 #include <stdlib.h>
 
 void assertEquals(int expected, int actual, char message[]);
-void testSmithy();
+void testAdventurer();
 
 int main(int argc, char* argv[]) 
 {
@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
     printf("*******Begin testing of %s*******\n",functionUnderTest);
     fflush(stdout);        
     
-    testSmithy();
+    testAdventurer();
     
     printf("*******End testing of %s*******\n",functionUnderTest);
     fflush(stdout);        
@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-void testSmithy()
+void testAdventurer()
 {
     struct gameState state;
     int players = 3;
