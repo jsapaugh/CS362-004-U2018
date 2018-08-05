@@ -12,10 +12,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
+//using 2000 loops to ensure every line gets hit every time
 #define TEST_LOOPS 2000
 
-void assertEquals(int expected, int actual, char message []);
+int assertEquals(int expected, int actual);
 void testAdventurer();
 int checkTreasureInDeck(struct gameState *state);
 int checkTreasureInHand(struct gameState *state);
@@ -47,6 +47,14 @@ void testAdventurer()
 	int i;
 	int k[10] = {adventurer, gardens, smithy, village, great_hall, council_room, ambassador, mine, cutpurse, salvager};
 	int kWithGoldSilverCopper[13] = {adventurer, gardens, smithy, village, great_hall, council_room, ambassador, mine, cutpurse, salvager, gold, silver, copper};
+	int playerOneHandTimes = 0;
+	int playerTwoHandTimes = 0;
+	int playerThreeHandTimes = 0;
+	int playerOneTotalTimes = 0;
+	int playerOneTreasureHandTimes = 0;
+	int playerOneTreasureDeckTimes = 0;
+	int playerOneActionsTimes = 0;
+	int correctNumberTimesPlayed = 0;
 	
 	for(i = 0; i < TEST_LOOPS; i++)
 	{
@@ -60,6 +68,8 @@ void testAdventurer()
 	    initializeGame(players, k, seed, &state);
 	    //fill the players hand with some cards that are in the game, including gold, silver, copper.
 	    int x;
+	    //used 40 to fill the deck as it will provide plenty of cards to
+	    //test each piece of the adventurer effect function
 	    for(x = 0; x < 40; x++)
 	    {
 	    	state.deck[0][x] = kWithGoldSilverCopper[rand() % 13];
@@ -80,8 +90,8 @@ void testAdventurer()
 	    
 	    int played =  cardEffect(adventurer, 0, 0, 0, &state, handPos, &bonus);
 	    
-	    assertEquals(0, state.numActions, "Testing total number of actions after playing adventurer for player one");
-	    assertEquals(0, played, "Testing return code on cardEffect(...)");
+	    playerOneActionsTimes += assertEquals(0, state.numActions);
+	    correctNumberTimesPlayed += assertEquals(0, played);
 
 		int treasureInDeckAfterPlayerOne = checkTreasureInDeck(&state);
 		int treasureInHandAfterPlayerOne = checkTreasureInHand(&state);
@@ -99,32 +109,36 @@ void testAdventurer()
 	    int handDifferencePlayerThree = abs(numHandCards(&state)-handCountBeforePlayerThree);
 	    
 	    //check hands of the active players
-	    assertEquals(2, handDifferencePlayerOne, "Testing difference in cards in hand for player one");
-	    assertEquals(0, handDifferencePlayerTwo, "Testing difference in cards in hand for player two");
-	    assertEquals(0, handDifferencePlayerThree, "Testing difference in cards in hand for player three");
+	    playerOneHandTimes += assertEquals(2, handDifferencePlayerOne);
+	    playerTwoHandTimes += assertEquals(0, handDifferencePlayerTwo);
+	    playerThreeHandTimes += assertEquals(0, handDifferencePlayerThree);
 	    
 	    //make sure no cards were trashed for player one
-	    assertEquals(totalCardsBeforePlayerOne, totalCardsAfterPlayerOne, "Confirming no cards were trashed for player one");
+	    playerOneTotalTimes += assertEquals(totalCardsBeforePlayerOne, totalCardsAfterPlayerOne);
 	    //secondary check to make sure only treasures were removed and added to hand
-	    assertEquals(treasureInDeckBeforePlayerOne - 2, treasureInDeckAfterPlayerOne, "Checking treasure count in deck for player one.");
-	    assertEquals(treasureInHandBeforePlayerOne + 2, treasureInHandAfterPlayerOne, "Checking treasure count in hand for player one.");
+	    playerOneTreasureDeckTimes += assertEquals(treasureInDeckBeforePlayerOne - 2, treasureInDeckAfterPlayerOne);
+	    playerOneTreasureHandTimes += assertEquals(treasureInHandBeforePlayerOne + 2, treasureInHandAfterPlayerOne);
 	}
+	printf("Correct number of cards in player one's hand %d of %d times\n", playerOneHandTimes, TEST_LOOPS);
+	printf("Correct number of cards in player two's hand %d of %d times\n", playerTwoHandTimes, TEST_LOOPS);
+	printf("Correct number of cards in player three's hand %d of %d times\n", playerThreeHandTimes, TEST_LOOPS);
+	printf("Correct number of total cards in player one's hand+deck+discard %d of %d times\n", playerOneTotalTimes, TEST_LOOPS);
+	printf("Correct number of treasure cards in player ones's hand %d of %d times\n", playerOneTreasureHandTimes, TEST_LOOPS);
+	printf("Correct number of treasure cards in player ones's deck %d of %d times\n", playerOneTreasureDeckTimes, TEST_LOOPS);
+	printf("Correct number of actions after player one played adventurer card %d of %d times\n", playerOneActionsTimes, TEST_LOOPS);
+	printf("cardEffect returned correctly %d of %d times\n",correctNumberTimesPlayed ,TEST_LOOPS);
 }
 
-void assertEquals(int expected, int actual, char message[])
+int assertEquals(int expected, int actual)
 {
-    printf("%s\n", message);
-    fflush(stdout);
     
     if(expected == actual)
     {
-        printf("****************TEST SUCCESSFULLY COMPLETED****************\n");
-        fflush(stdout);
+    	return 1;
     }
     else
     {
-        printf("************************TEST FAILED************************\n");
-        fflush(stdout);        
+    	return 0;
     }
 }
 
