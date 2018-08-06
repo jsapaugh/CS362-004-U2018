@@ -1,5 +1,8 @@
 /*********************************************
  * Authors : Jacob Sapaugh, Noah Beach, Michele Larson
+ * Class : CS 362 Intro To Software Engineering II
+ * School : Oregon State University
+ * Date : 08/05/2018
  **********************************************/
 
 import java.util.ArrayList;
@@ -16,42 +19,44 @@ import org.junit.rules.ErrorCollector;
 
 public class UrlValidatorTest
 {
-    UrlValidator urlValidator = new UrlValidator();
-    
-    @Rule
-    public ErrorCollector errorCollector = new ErrorCollector();
+	
+	@Rule
+	public ErrorCollector errorCollector = new ErrorCollector();
 
    @Test
    public void testManualTest()
    {
+       //default schemas allowed
+       UrlValidator urlValidator = new UrlValidator();
+       
+       //You can use this function to implement your manual testing
        String methodName = "testManualTest()";
        System.out.println("Begin test " + methodName);
-       //You can use this function to implement your manual testing
-       List<ResultPair> resultPairList = new ArrayList<ResultPair>();
-       resultPairList.add(new ResultPair("http://google.com", true));
-       resultPairList.add(new ResultPair("https:/www.google.com", true));
-       resultPairList.add(new ResultPair("ftp://google.com", true));
-       resultPairList.add(new ResultPair("http:/www.google.com", false));
-       resultPairList.add(new ResultPair("does.this._Work?:maybe", false));
-       resultPairList.add(new ResultPair("jacob://testing.com", false));
-       resultPairList.add(new ResultPair("https:/fail.com", false));
-       resultPairList.add(new ResultPair("htp://", false));
-       resultPairList.add(new ResultPair("testing.com", true));
-       resultPairList.add(new ResultPair("testing.port.com:@/", false));
-       resultPairList.add(new ResultPair("http://testing.port.com:100/", true));
-       resultPairList.add(new ResultPair("http://path.com:8080/@_path/", false));
-       resultPairList.add(new ResultPair("http://path.com:8090/path", true));
-       resultPairList.add(new ResultPair("https://path.com:8090/query?this=that", true));
-       resultPairList.add(new ResultPair("ftp://path.com:100/query?test=%20", false));
+       List<TestPair> TestPairList = new ArrayList<TestPair>();
+       TestPairList.add(new TestPair("http://google.com", true));
+       TestPairList.add(new TestPair("https:/www.google.com", true));
+       TestPairList.add(new TestPair("ftp://google.com", true));
+       TestPairList.add(new TestPair("http:/www.google.com", false));
+       TestPairList.add(new TestPair("does.this._Work?:maybe", false));
+       TestPairList.add(new TestPair("jacob://testing.com", false));
+       TestPairList.add(new TestPair("https:/fail.com", false));
+       TestPairList.add(new TestPair("htp://", false));
+       TestPairList.add(new TestPair("testing.com", true));
+       TestPairList.add(new TestPair("testing.port.com:@/", false));
+       TestPairList.add(new TestPair("http://testing.port.com:100/", true));
+       TestPairList.add(new TestPair("http://path.com:8080/@_path/", false));
+       TestPairList.add(new TestPair("http://path.com:8090/path", true));
+       TestPairList.add(new TestPair("https://path.com:8090/query?this=that", true));
+       TestPairList.add(new TestPair("ftp://path.com:100/query?test=space%20here", true));
        boolean actual;
        boolean passed = true;
-       for (ResultPair resultPair : resultPairList) 
+       for (TestPair TestPair : TestPairList) 
        {
-           actual = urlValidator.isValid(resultPair.item);
+           actual = urlValidator.isValid(TestPair.getUrlToTest());
            //try catch so if it fails, will continue and can print out all at the end
            try
            {
-           assertEquals("Url " + resultPair.item + " tested ",resultPair.valid, actual);
+           assertEquals("Url " + TestPair.getUrlToTest() + " tested ", TestPair.getValidity(), actual);
            }
            catch (Throwable t)
            {
@@ -66,12 +71,12 @@ public class UrlValidatorTest
    @Test
    public void testYourFirstPartition()
    {
-     //You can use this function to implement your First Partition testing     
+	 //You can use this function to implement your First Partition testing	   
    }
    
    @Test
    public void testYourSecondPartition(){
-         //You can use this function to implement your Second Partition testing    
+		 //You can use this function to implement your Second Partition testing	   
 
    }
    //You need to create more test cases for your Partitions if you need to 
@@ -79,7 +84,7 @@ public class UrlValidatorTest
    @Test
    public void testIsValid()
    {
-       //You can use this function for programming based testing
+	   //You can use this function for programming based testing
 
    }
 }
