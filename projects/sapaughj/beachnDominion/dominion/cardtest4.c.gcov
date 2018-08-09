@@ -1,0 +1,116 @@
+        -:    0:Source:cardtest4.c
+        -:    0:Graph:cardtest4.gcno
+        -:    0:Data:cardtest4.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*
+        -:    2:* Author : Jacob Sapaugh
+        -:    3:*          Oregon State University
+        -:    4:*          CS 362
+        -:    5:*          07-18-2018
+        -:    6:*/
+        -:    7:
+        -:    8:#include "dominion.h"
+        -:    9:#include "dominion_helpers.h"
+        -:   10:#include "interface.h"
+        -:   11:#include "rngs.h"
+        -:   12:#include <stdio.h>
+        -:   13:#include <stdlib.h>
+        -:   14:
+        -:   15:void assertEquals(int expected, int actual, char message[]);
+        -:   16:void testGardens();
+        -:   17:
+function main called 1 returned 100% blocks executed 100%
+        1:   18:int main(int argc, char* argv[]) 
+        -:   19:{
+        1:   20:    char functionUnderTest[] = "int cardEffect(...) gardensEffect(...)";
+        -:   21:
+        1:   22:    printf("__________________________________________________________________\n");
+call    0 returned 100%
+        1:   23:    fflush(stdout);        
+call    0 returned 100%
+        1:   24:    printf("*******Begin testing of %s*******\n",functionUnderTest);
+call    0 returned 100%
+        1:   25:    fflush(stdout);        
+call    0 returned 100%
+        -:   26:    
+        1:   27:    testGardens();
+call    0 returned 100%
+        -:   28:    
+        1:   29:    printf("*******End testing of %s*******\n",functionUnderTest);
+call    0 returned 100%
+        1:   30:    fflush(stdout);        
+call    0 returned 100%
+        1:   31:    printf("__________________________________________________________________\n");
+call    0 returned 100%
+        1:   32:    fflush(stdout);        
+call    0 returned 100%
+        -:   33:	
+        1:   34:    return 0;
+        -:   35:}
+        -:   36:
+function testGardens called 1 returned 100% blocks executed 100%
+        1:   37:void testGardens()
+        -:   38:{
+        -:   39:    struct gameState state;
+        1:   40:    int players = 3;
+        1:   41:    int seed = 100;
+        1:   42:    int handPos = 0;
+        1:   43:    int bonus = 0;
+        -:   44:    
+        1:   45:	int k[10] = {adventurer, gardens, smithy, village, great_hall, council_room, ambassador, mine, cutpurse, salvager};
+        -:   46:	
+        1:   47:    initializeGame(players, k, seed, &state);
+call    0 returned 100%
+        -:   48:    
+        1:   49:    state.whoseTurn = 0;
+        1:   50:    int handCountBeforePlayerOne = numHandCards(&state);
+call    0 returned 100%
+        -:   51:    
+        1:   52:    int totalCardsBeforePlayerOne = state.deckCount[0] + state.discardCount[0] + state.handCount[0];
+        -:   53:    
+        1:   54:    int played =  cardEffect(gardens, 0, 0, 0, &state, handPos, &bonus);
+call    0 returned 100%
+        1:   55:    assertEquals(-1, played, "Confirming return code from cardEffect(...)");
+call    0 returned 100%
+        -:   56:    
+        1:   57:    int totalCardsAfterPlayerOne = state.deckCount[0] + state.discardCount[0] + state.handCount[0];
+        -:   58:    
+        -:   59:    //player 0 (player one's turn)
+        1:   60:    int handDifferencePlayerOne = abs(numHandCards(&state) - handCountBeforePlayerOne);
+call    0 returned 100%
+        -:   61:    
+        -:   62:    //check hands of the active players
+        1:   63:    assertEquals(0, handDifferencePlayerOne, "Testing difference in cards in hand before and after gardens card played");
+call    0 returned 100%
+        -:   64:    
+        -:   65:    //make sure no cards were trashed
+        1:   66:    assertEquals(totalCardsBeforePlayerOne, totalCardsAfterPlayerOne, "Testing difference in total cards before and after gardens card played");
+call    0 returned 100%
+        1:   67:}
+        -:   68:
+function assertEquals called 3 returned 100% blocks executed 75%
+        3:   69:void assertEquals(int expected, int actual, char message[])
+        -:   70:{
+        3:   71:    printf("%s\n", message);
+call    0 returned 100%
+        3:   72:    fflush(stdout);
+call    0 returned 100%
+        -:   73:    
+        3:   74:    if(expected == actual)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -:   75:    {
+        3:   76:        printf("****************TEST SUCCESSFULLY COMPLETED****************\n");
+call    0 returned 100%
+        3:   77:        fflush(stdout);
+call    0 returned 100%
+        -:   78:    }
+        -:   79:    else
+        -:   80:    {
+    #####:   81:        printf("************************TEST FAILED************************\n");
+call    0 never executed
+    #####:   82:        fflush(stdout);        
+call    0 never executed
+        -:   83:    }
+        3:   84:}

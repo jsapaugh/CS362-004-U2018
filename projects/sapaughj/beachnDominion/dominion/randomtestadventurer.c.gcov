@@ -1,0 +1,248 @@
+        -:    0:Source:randomtestadventurer.c
+        -:    0:Graph:randomtestadventurer.gcno
+        -:    0:Data:randomtestadventurer.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*
+        -:    2:* Author : Jacob Sapaugh
+        -:    3:*          Oregon State University
+        -:    4:*          CS 362
+        -:    5:*          08-04-2018
+        -:    6:*/
+        -:    7:
+        -:    8:#include "dominion.h"
+        -:    9:#include "dominion_helpers.h"
+        -:   10:#include "rngs.h"
+        -:   11:#include "interface.h"
+        -:   12:#include <stdio.h>
+        -:   13:#include <stdlib.h>
+        -:   14:#include <time.h>
+        -:   15://using 2000 loops to ensure every line gets hit every time
+        -:   16:#define TEST_LOOPS 2000
+        -:   17:
+        -:   18:int assertEquals(int expected, int actual);
+        -:   19:void testAdventurer();
+        -:   20:int checkTreasureInDeck(struct gameState *state);
+        -:   21:int checkTreasureInHand(struct gameState *state);
+        -:   22:
+function main called 1 returned 100% blocks executed 100%
+        1:   23:int main(int argc, char* argv[])
+        -:   24:{
+        1:   25:    char functionUnderTest[] = "int cardEffect(...) adventurerEffect(...)";
+        -:   26:
+        1:   27:    printf("__________________________________________________________________\n");
+call    0 returned 100%
+        1:   28:    fflush(stdout);        
+call    0 returned 100%
+        1:   29:    printf("*******Begin testing of %s*******\n",functionUnderTest);
+call    0 returned 100%
+        1:   30:    fflush(stdout);        
+call    0 returned 100%
+        -:   31:    
+        1:   32:    testAdventurer();
+call    0 returned 100%
+        -:   33:    
+        1:   34:    printf("*******End testing of %s*******\n",functionUnderTest);
+call    0 returned 100%
+        1:   35:    fflush(stdout);        
+call    0 returned 100%
+        1:   36:    printf("__________________________________________________________________\n");
+call    0 returned 100%
+        1:   37:    fflush(stdout);        
+call    0 returned 100%
+        -:   38:	
+        1:   39:    return 0;
+        -:   40:}
+        -:   41:
+function testAdventurer called 1 returned 100% blocks executed 100%
+        1:   42:void testAdventurer()
+        -:   43:{
+        -:   44:		//seeding random number generator
+        -:   45:	time_t t;
+        1:   46:	srand((unsigned) time(&t));
+call    0 returned 100%
+call    1 returned 100%
+        -:   47:	int i;
+        1:   48:	int k[10] = {adventurer, gardens, smithy, village, great_hall, council_room, ambassador, mine, cutpurse, salvager};
+        1:   49:	int kWithGoldSilverCopper[13] = {adventurer, gardens, smithy, village, great_hall, council_room, ambassador, mine, cutpurse, salvager, gold, silver, copper};
+        1:   50:	int playerOneHandTimes = 0;
+        1:   51:	int playerTwoHandTimes = 0;
+        1:   52:	int playerThreeHandTimes = 0;
+        1:   53:	int playerOneTotalTimes = 0;
+        1:   54:	int playerOneTreasureHandTimes = 0;
+        1:   55:	int playerOneTreasureDeckTimes = 0;
+        1:   56:	int playerOneActionsTimes = 0;
+        1:   57:	int correctNumberTimesPlayed = 0;
+        -:   58:	
+     2001:   59:	for(i = 0; i < TEST_LOOPS; i++)
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+        -:   60:	{
+        -:   61:	    struct gameState state;
+     2000:   62:	    int players = 3;
+     2000:   63:	    int seed = rand();
+call    0 returned 100%
+     2000:   64:	    int handPos = 0;
+     2000:   65:	    int bonus = 0;
+        -:   66:	    
+        -:   67:		
+     2000:   68:	    initializeGame(players, k, seed, &state);
+call    0 returned 100%
+        -:   69:	    //fill the players hand with some cards that are in the game, including gold, silver, copper.
+        -:   70:	    int x;
+        -:   71:	    //used 40 to fill the deck as it will provide plenty of cards to
+        -:   72:	    //test each piece of the adventurer effect function
+    82000:   73:	    for(x = 0; x < 40; x++)
+branch  0 taken 98%
+branch  1 taken 2% (fallthrough)
+        -:   74:	    {
+    80000:   75:	    	state.deck[0][x] = kWithGoldSilverCopper[rand() % 13];
+call    0 returned 100%
+    80000:   76:	    	state.hand[0][x] = kWithGoldSilverCopper[rand() % 13];
+call    0 returned 100%
+        -:   77:	    }
+        -:   78:	    
+     2000:   79:	    state.whoseTurn = 1;
+     2000:   80:	    int handCountBeforePlayerTwo = numHandCards(&state);
+call    0 returned 100%
+        -:   81:	
+     2000:   82:	    state.whoseTurn = 2;
+     2000:   83:	    int handCountBeforePlayerThree = numHandCards(&state);
+call    0 returned 100%
+        -:   84:	    
+     2000:   85:	    state.whoseTurn = 0;
+     2000:   86:	    int handCountBeforePlayerOne = numHandCards(&state);
+call    0 returned 100%
+     2000:   87:	    int totalCardsBeforePlayerOne = state.deckCount[0] + state.discardCount[0] + state.handCount[0];
+     2000:   88:	    int treasureInDeckBeforePlayerOne = checkTreasureInDeck(&state);
+call    0 returned 100%
+     2000:   89:	    int treasureInHandBeforePlayerOne = checkTreasureInHand(&state);
+call    0 returned 100%
+        -:   90:	    
+     2000:   91:	    int played =  cardEffect(adventurer, 0, 0, 0, &state, handPos, &bonus);
+call    0 returned 100%
+        -:   92:	    
+     2000:   93:	    playerOneActionsTimes += assertEquals(0, state.numActions);
+call    0 returned 100%
+     2000:   94:	    correctNumberTimesPlayed += assertEquals(0, played);
+call    0 returned 100%
+        -:   95:
+     2000:   96:		int treasureInDeckAfterPlayerOne = checkTreasureInDeck(&state);
+call    0 returned 100%
+     2000:   97:		int treasureInHandAfterPlayerOne = checkTreasureInHand(&state);
+call    0 returned 100%
+     2000:   98:	    int totalCardsAfterPlayerOne = state.deckCount[0] + state.discardCount[0] + state.handCount[0];
+        -:   99:	    
+        -:  100:	    //player 0 (player one's turn)
+     2000:  101:	    int handDifferencePlayerOne = abs(numHandCards(&state) - handCountBeforePlayerOne);
+call    0 returned 100%
+        -:  102:	    
+     2000:  103:	    state.whoseTurn = 1;
+        -:  104:	    //check next players hand count, make sure it is 0
+     2000:  105:	    int handDifferencePlayerTwo = abs(numHandCards(&state)-handCountBeforePlayerTwo);
+call    0 returned 100%
+        -:  106:	    
+     2000:  107:	    state.whoseTurn = 2;
+        -:  108:	    //check next players hand count, make sure it is 0
+     2000:  109:	    int handDifferencePlayerThree = abs(numHandCards(&state)-handCountBeforePlayerThree);
+call    0 returned 100%
+        -:  110:	    
+        -:  111:	    //check hands of the active players
+     2000:  112:	    playerOneHandTimes += assertEquals(2, handDifferencePlayerOne);
+call    0 returned 100%
+     2000:  113:	    playerTwoHandTimes += assertEquals(0, handDifferencePlayerTwo);
+call    0 returned 100%
+     2000:  114:	    playerThreeHandTimes += assertEquals(0, handDifferencePlayerThree);
+call    0 returned 100%
+        -:  115:	    
+        -:  116:	    //make sure no cards were trashed for player one
+     2000:  117:	    playerOneTotalTimes += assertEquals(totalCardsBeforePlayerOne, totalCardsAfterPlayerOne);
+call    0 returned 100%
+        -:  118:	    //secondary check to make sure only treasures were removed and added to hand
+     2000:  119:	    playerOneTreasureDeckTimes += assertEquals(treasureInDeckBeforePlayerOne - 2, treasureInDeckAfterPlayerOne);
+call    0 returned 100%
+     2000:  120:	    playerOneTreasureHandTimes += assertEquals(treasureInHandBeforePlayerOne + 2, treasureInHandAfterPlayerOne);
+call    0 returned 100%
+        -:  121:	}
+        1:  122:	printf("Correct number of cards in player one's hand %d of %d times\n", playerOneHandTimes, TEST_LOOPS);
+call    0 returned 100%
+        1:  123:	printf("Correct number of cards in player two's hand %d of %d times\n", playerTwoHandTimes, TEST_LOOPS);
+call    0 returned 100%
+        1:  124:	printf("Correct number of cards in player three's hand %d of %d times\n", playerThreeHandTimes, TEST_LOOPS);
+call    0 returned 100%
+        1:  125:	printf("Correct number of total cards in player one's hand+deck+discard %d of %d times\n", playerOneTotalTimes, TEST_LOOPS);
+call    0 returned 100%
+        1:  126:	printf("Correct number of treasure cards in player ones's hand %d of %d times\n", playerOneTreasureHandTimes, TEST_LOOPS);
+call    0 returned 100%
+        1:  127:	printf("Correct number of treasure cards in player ones's deck %d of %d times\n", playerOneTreasureDeckTimes, TEST_LOOPS);
+call    0 returned 100%
+        1:  128:	printf("Correct number of actions after player one played adventurer card %d of %d times\n", playerOneActionsTimes, TEST_LOOPS);
+call    0 returned 100%
+        1:  129:	printf("cardEffect returned correctly %d of %d times\n",correctNumberTimesPlayed ,TEST_LOOPS);
+call    0 returned 100%
+        1:  130:}
+        -:  131:
+function assertEquals called 16000 returned 100% blocks executed 100%
+    16000:  132:int assertEquals(int expected, int actual)
+        -:  133:{
+        -:  134:    
+    16000:  135:    if(expected == actual)
+branch  0 taken 51% (fallthrough)
+branch  1 taken 49%
+        -:  136:    {
+     8084:  137:    	return 1;
+        -:  138:    }
+        -:  139:    else
+        -:  140:    {
+     7916:  141:    	return 0;
+        -:  142:    }
+        -:  143:}
+        -:  144:
+        -:  145:
+function checkTreasureInHand called 4000 returned 100% blocks executed 100%
+     4000:  146:int checkTreasureInHand(struct gameState *state) 
+        -:  147:{
+     4000:  148:    int count = 0;
+     4000:  149:	int currentPlayer = state->whoseTurn;
+        -:  150:    int i;
+    24197:  151:    for (i = 0; i < state->handCount[currentPlayer]; i++) 
+branch  0 taken 83%
+branch  1 taken 17% (fallthrough)
+        -:  152:    {
+    20197:  153:        if(state->hand[currentPlayer][i] == copper || state->hand[currentPlayer][i] == silver || state->hand[currentPlayer][i] == gold) 
+branch  0 taken 90% (fallthrough)
+branch  1 taken 10%
+branch  2 taken 89% (fallthrough)
+branch  3 taken 11%
+branch  4 taken 13% (fallthrough)
+branch  5 taken 87%
+        -:  154:        {
+     6130:  155:                count++;
+        -:  156:        }
+        -:  157:    }
+     4000:  158:    return count;
+        -:  159:}
+        -:  160:
+function checkTreasureInDeck called 4000 returned 100% blocks executed 100%
+     4000:  161:int checkTreasureInDeck(struct gameState *state) 
+        -:  162:{
+     4000:  163:    int count = 0;
+     4000:  164:	int currentPlayer = state->whoseTurn;
+        -:  165:    int i;
+    17625:  166:    for (i = 0; i < state->deckCount[currentPlayer]; i++) 
+branch  0 taken 77%
+branch  1 taken 23% (fallthrough)
+        -:  167:    {
+    13625:  168:        if(state->deck[currentPlayer][i] == copper || state->deck[currentPlayer][i] == silver || state->deck[currentPlayer][i] == gold) 
+branch  0 taken 92% (fallthrough)
+branch  1 taken 8%
+branch  2 taken 92% (fallthrough)
+branch  3 taken 8%
+branch  4 taken 9% (fallthrough)
+branch  5 taken 91%
+        -:  169:        {
+     3126:  170:                count++;
+        -:  171:        }
+        -:  172:    }
+     4000:  173:    return count;
+        -:  174:}

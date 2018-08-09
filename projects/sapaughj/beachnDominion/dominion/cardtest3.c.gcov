@@ -1,0 +1,140 @@
+        -:    0:Source:cardtest3.c
+        -:    0:Graph:cardtest3.gcno
+        -:    0:Data:cardtest3.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*
+        -:    2:* Author : Jacob Sapaugh
+        -:    3:*          Oregon State University
+        -:    4:*          CS 362
+        -:    5:*          07-18-2018
+        -:    6:*/
+        -:    7:
+        -:    8:#include "dominion.h"
+        -:    9:#include "dominion_helpers.h"
+        -:   10:#include "interface.h"
+        -:   11:#include "rngs.h"
+        -:   12:#include <stdio.h>
+        -:   13:#include <stdlib.h>
+        -:   14:
+        -:   15:void assertEquals(int expected, int actual, char message[]);
+        -:   16:void assertTrue(int value);
+        -:   17:void testVillage();
+        -:   18:
+function main called 1 returned 100% blocks executed 100%
+        1:   19:int main(int argc, char* argv[]) 
+        -:   20:{
+        1:   21:    char functionUnderTest[] = "int cardEffect(...) villageEffect(...)";
+        -:   22:
+        1:   23:    printf("__________________________________________________________________\n");
+call    0 returned 100%
+        1:   24:    fflush(stdout);        
+call    0 returned 100%
+        1:   25:    printf("*******Begin testing of %s*******\n",functionUnderTest);
+call    0 returned 100%
+        1:   26:    fflush(stdout);        
+call    0 returned 100%
+        -:   27:    
+        1:   28:    testVillage();
+call    0 returned 100%
+        -:   29:    
+        1:   30:    printf("*******End testing of %s*******\n",functionUnderTest);
+call    0 returned 100%
+        1:   31:    fflush(stdout);        
+call    0 returned 100%
+        1:   32:    printf("__________________________________________________________________\n");
+call    0 returned 100%
+        1:   33:    fflush(stdout);        
+call    0 returned 100%
+        -:   34:	
+        1:   35:    return 0;
+        -:   36:}
+        -:   37:
+function testVillage called 1 returned 100% blocks executed 100%
+        1:   38:void testVillage()
+        -:   39:{
+        -:   40:    struct gameState state;
+        1:   41:    int players = 3;
+        1:   42:    int seed = 100;
+        1:   43:    int handPos = 0;
+        1:   44:    int bonus = 0;
+        -:   45:    
+        1:   46:	int k[10] = {adventurer, gardens, smithy, village, great_hall, council_room, ambassador, mine, cutpurse, salvager};
+        -:   47:	
+        1:   48:    initializeGame(players, k, seed, &state);
+call    0 returned 100%
+        -:   49:    
+        -:   50:    
+        1:   51:    state.whoseTurn = 1;
+        1:   52:    int handCountBeforePlayerTwo = numHandCards(&state);
+call    0 returned 100%
+        -:   53:
+        1:   54:    state.whoseTurn = 2;
+        1:   55:    int handCountBeforePlayerThree = numHandCards(&state);
+call    0 returned 100%
+        -:   56:    
+        1:   57:    state.whoseTurn = 0;
+        1:   58:    int handCountBeforePlayerOne = numHandCards(&state);
+call    0 returned 100%
+        1:   59:    int totalCardsBeforePlayerOne = state.deckCount[0] + state.discardCount[0] + state.handCount[0];
+        1:   60:    int played =  cardEffect(village, 0, 0, 0, &state, handPos, &bonus);
+call    0 returned 100%
+        1:   61:    assertEquals(2, state.numActions, "Testing total number of actions after playing smithy");
+call    0 returned 100%
+        1:   62:    assertEquals(0, played, "Testing return code on cardEffect(...)");
+call    0 returned 100%
+        -:   63:    
+        1:   64:    int totalCardsAfterPlayerOne = state.deckCount[0] + state.discardCount[0] + state.handCount[0];
+        -:   65:    
+        -:   66:    //player 0 (player one's turn)
+        1:   67:    int handDifferencePlayerOne = abs(numHandCards(&state) - handCountBeforePlayerOne);
+call    0 returned 100%
+        -:   68:    
+        1:   69:    state.whoseTurn = 1;
+        -:   70:    //check next players hand count, make sure it is 0
+        1:   71:    int handDifferencePlayerTwo = abs(numHandCards(&state)-handCountBeforePlayerTwo);
+call    0 returned 100%
+        -:   72:    
+        1:   73:    state.whoseTurn = 2;
+        -:   74:    //check next players hand count, make sure it is 0
+        1:   75:    int handDifferencePlayerThree = abs(numHandCards(&state)-handCountBeforePlayerThree);
+call    0 returned 100%
+        -:   76:    
+        -:   77:    //check hands of the active players
+        1:   78:    assertEquals(2, handDifferencePlayerOne, "Testing difference of cards in hand for player one");
+call    0 returned 100%
+        1:   79:    assertEquals(0, handDifferencePlayerTwo, "Testing difference of cards in hand for player two");
+call    0 returned 100%
+        1:   80:    assertEquals(0, handDifferencePlayerThree, "Testing difference of cards in hand for player three");
+call    0 returned 100%
+        -:   81:    
+        -:   82:    //make sure no cards were trashed
+        1:   83:    assertEquals(totalCardsBeforePlayerOne, totalCardsAfterPlayerOne, "Testing total cards for player one");
+call    0 returned 100%
+        1:   84:}
+        -:   85:
+function assertEquals called 6 returned 100% blocks executed 100%
+        6:   86:void assertEquals(int expected, int actual, char message[])
+        -:   87:{
+        6:   88:    printf("%s\n", message);
+call    0 returned 100%
+        6:   89:    fflush(stdout);
+call    0 returned 100%
+        -:   90:    
+        6:   91:    if(expected == actual)
+branch  0 taken 50% (fallthrough)
+branch  1 taken 50%
+        -:   92:    {
+        3:   93:        printf("****************TEST SUCCESSFULLY COMPLETED****************\n");
+call    0 returned 100%
+        3:   94:        fflush(stdout);
+call    0 returned 100%
+        -:   95:    }
+        -:   96:    else
+        -:   97:    {
+        3:   98:        printf("************************TEST FAILED************************\n");
+call    0 returned 100%
+        3:   99:        fflush(stdout);        
+call    0 returned 100%
+        -:  100:    }
+        6:  101:}

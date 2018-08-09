@@ -1,0 +1,355 @@
+        -:    0:Source:unittest2.c
+        -:    0:Graph:unittest2.gcno
+        -:    0:Data:unittest2.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*
+        -:    2:* Author : Jacob Sapaugh
+        -:    3:*          Oregon State University
+        -:    4:*          CS 362
+        -:    5:*          07-18-2018
+        -:    6:*/
+        -:    7:
+        -:    8:#include "dominion.h"
+        -:    9:#include "dominion_helpers.h"
+        -:   10:#include "rngs.h"
+        -:   11:#include <stdio.h>
+        -:   12:#include <stdlib.h>
+        -:   13:
+        -:   14:/*
+        -:   15:* Testing getCost(...); from dominion.c
+        -:   16:*/
+        -:   17:
+        -:   18:void testCostCurse();
+        -:   19:void testCostEstate();
+        -:   20:void testCostDuchy();
+        -:   21:void testCostProvince();
+        -:   22:void testCostCopper();
+        -:   23:void testCostSilver();
+        -:   24:void testCostGold();
+        -:   25:void testCostAdventurer();
+        -:   26:void testCostCouncilRoom();
+        -:   27:void testCostFeast();
+        -:   28:void testCostGardens();
+        -:   29:void testCostMine();
+        -:   30:void testCostRemodel();
+        -:   31:void testCostSmithy();
+        -:   32:void testCostVillage();
+        -:   33:void testCostBaron();
+        -:   34:void testCostGreatHall();
+        -:   35:void testCostMinion();
+        -:   36:void testCostSteward();
+        -:   37:void testCostTribute();
+        -:   38:void testCostAmbassador();
+        -:   39:void testCostCutpurse();
+        -:   40:void testCostEmbargo(); 
+        -:   41:void testCostOutpost();
+        -:   42:void testCostSalvager();
+        -:   43:void testCostSeaHag();
+        -:   44:void testCostTreasureMap();
+        -:   45:void testDefault();
+        -:   46:void assertEquals(int expected, int actual, char message[]);
+        -:   47:
+        -:   48:
+function main called 1 returned 100% blocks executed 100%
+        1:   49:int main(int argc, char *argv[])
+        -:   50:{
+        1:   51:    char functionUnderTest[] = "int getCost(int cardNumber)";
+        1:   52:    printf("__________________________________________________________________\n");
+call    0 returned 100%
+        1:   53:    fflush(stdout);        
+call    0 returned 100%
+        1:   54:    printf("*******Begin testing of %s*******\n",functionUnderTest);
+call    0 returned 100%
+        1:   55:    fflush(stdout);        
+call    0 returned 100%
+        1:   56:    testCostCurse();
+call    0 returned 100%
+        1:   57:    testCostEstate();
+call    0 returned 100%
+        1:   58:    testCostDuchy();
+call    0 returned 100%
+        1:   59:    testCostProvince();
+call    0 returned 100%
+        1:   60:    testCostCopper();
+call    0 returned 100%
+        1:   61:    testCostSilver();
+call    0 returned 100%
+        1:   62:    testCostGold();
+call    0 returned 100%
+        1:   63:    testCostAdventurer();
+call    0 returned 100%
+        1:   64:    testCostCouncilRoom();
+call    0 returned 100%
+        1:   65:    testCostFeast();
+call    0 returned 100%
+        1:   66:    testCostGardens();
+call    0 returned 100%
+        1:   67:    testCostMine();
+call    0 returned 100%
+        1:   68:    testCostRemodel();
+call    0 returned 100%
+        1:   69:    testCostSmithy();
+call    0 returned 100%
+        1:   70:    testCostVillage();
+call    0 returned 100%
+        1:   71:    testCostBaron();
+call    0 returned 100%
+        1:   72:    testCostGreatHall();
+call    0 returned 100%
+        1:   73:    testCostMinion();
+call    0 returned 100%
+        1:   74:    testCostSteward();
+call    0 returned 100%
+        1:   75:    testCostTribute();
+call    0 returned 100%
+        1:   76:    testCostAmbassador();
+call    0 returned 100%
+        1:   77:    testCostCutpurse();
+call    0 returned 100%
+        1:   78:    testCostEmbargo(); 
+call    0 returned 100%
+        1:   79:    testCostOutpost();
+call    0 returned 100%
+        1:   80:    testCostSalvager();
+call    0 returned 100%
+        1:   81:    testCostSeaHag();
+call    0 returned 100%
+        1:   82:    testCostTreasureMap();
+call    0 returned 100%
+        1:   83:    testDefault();
+call    0 returned 100%
+        1:   84:    fflush(stdout);        
+call    0 returned 100%
+        1:   85:    printf("*******End testing of %s*******\n",functionUnderTest);
+call    0 returned 100%
+        1:   86:    fflush(stdout);        
+call    0 returned 100%
+        1:   87:    printf("__________________________________________________________________\n");
+call    0 returned 100%
+        1:   88:    fflush(stdout);        
+call    0 returned 100%
+        -:   89:}
+        -:   90:
+function testCostCurse called 1 returned 100% blocks executed 100%
+        1:   91:void testCostCurse()
+        -:   92:{
+        1:   93:    assertEquals(getCost(curse),0, "Testing cost of curse");
+call    0 returned 100%
+call    1 returned 100%
+        1:   94:}
+function testCostEstate called 1 returned 100% blocks executed 100%
+        1:   95:void testCostEstate()
+        -:   96:{
+        1:   97:    assertEquals(getCost(estate),2, "Testing cost of estate");
+call    0 returned 100%
+call    1 returned 100%
+        1:   98:}
+function testCostDuchy called 1 returned 100% blocks executed 100%
+        1:   99:void testCostDuchy()
+        -:  100:{
+        1:  101:    assertEquals(getCost(duchy),5, "Testing cost of duchy");
+call    0 returned 100%
+call    1 returned 100%
+        1:  102:}
+function testCostProvince called 1 returned 100% blocks executed 100%
+        1:  103:void testCostProvince()
+        -:  104:{
+        1:  105:    assertEquals(getCost(province),8, "Testing cost of province");
+call    0 returned 100%
+call    1 returned 100%
+        1:  106:}
+function testCostCopper called 1 returned 100% blocks executed 100%
+        1:  107:void testCostCopper()
+        -:  108:{
+        1:  109:    assertEquals(getCost(copper),0, "Testing cost of copper");
+call    0 returned 100%
+call    1 returned 100%
+        1:  110:}
+function testCostSilver called 1 returned 100% blocks executed 100%
+        1:  111:void testCostSilver()
+        -:  112:{
+        1:  113:    assertEquals(getCost(silver),3, "Testing cost of silver");
+call    0 returned 100%
+call    1 returned 100%
+        1:  114:}
+function testCostGold called 1 returned 100% blocks executed 100%
+        1:  115:void testCostGold()
+        -:  116:{
+        1:  117: assertEquals(getCost(gold),6, "Testing cost of gold");   
+call    0 returned 100%
+call    1 returned 100%
+        1:  118:}
+function testCostAdventurer called 1 returned 100% blocks executed 100%
+        1:  119:void testCostAdventurer()
+        -:  120:{
+        1:  121: assertEquals(getCost(adventurer),6, "Testing cost of adventurer");   
+call    0 returned 100%
+call    1 returned 100%
+        1:  122:}
+function testCostCouncilRoom called 1 returned 100% blocks executed 100%
+        1:  123:void testCostCouncilRoom()
+        -:  124:{
+        1:  125:    assertEquals(getCost(council_room),5, "Testing cost of council_room");
+call    0 returned 100%
+call    1 returned 100%
+        1:  126:}
+function testCostFeast called 1 returned 100% blocks executed 100%
+        1:  127:void testCostFeast()
+        -:  128:{
+        1:  129:    assertEquals(getCost(feast),4, "Testing cost of feast");
+call    0 returned 100%
+call    1 returned 100%
+        1:  130:}
+function testCostGardens called 1 returned 100% blocks executed 100%
+        1:  131:void testCostGardens()
+        -:  132:{
+        1:  133:    assertEquals(getCost(gardens),4, "Testing cost of gardens");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  134:}
+function testCostMine called 1 returned 100% blocks executed 100%
+        1:  135:void testCostMine()
+        -:  136:{
+        1:  137:    assertEquals(getCost(mine),5, "Testing cost of mine");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  138:}
+function testCostRemodel called 1 returned 100% blocks executed 100%
+        1:  139:void testCostRemodel()
+        -:  140:{
+        1:  141:    assertEquals(getCost(remodel),4, "Testing cost of remodel");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  142:}
+function testCostSmithy called 1 returned 100% blocks executed 100%
+        1:  143:void testCostSmithy()
+        -:  144:{
+        1:  145:    assertEquals(getCost(smithy),4, "Testing cost of smithy");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  146:}
+function testCostVillage called 1 returned 100% blocks executed 100%
+        1:  147:void testCostVillage()
+        -:  148:{
+        1:  149:    assertEquals(getCost(village),3, "Testing cost of village");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  150:}
+function testCostBaron called 1 returned 100% blocks executed 100%
+        1:  151:void testCostBaron()
+        -:  152:{
+        1:  153:    assertEquals(getCost(baron),4, "Testing cost of baron");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  154:}
+function testCostGreatHall called 1 returned 100% blocks executed 100%
+        1:  155:void testCostGreatHall()
+        -:  156:{
+        1:  157:    assertEquals(getCost(great_hall),3, "Testing cost of great_hall");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  158:}
+function testCostMinion called 1 returned 100% blocks executed 100%
+        1:  159:void testCostMinion()
+        -:  160:{
+        1:  161:    assertEquals(getCost(minion),5, "Testing cost of minion");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  162:}
+function testCostSteward called 1 returned 100% blocks executed 100%
+        1:  163:void testCostSteward()
+        -:  164:{
+        1:  165:    assertEquals(getCost(steward),3, "Testing cost of steward");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  166:}
+function testCostTribute called 1 returned 100% blocks executed 100%
+        1:  167:void testCostTribute()
+        -:  168:{
+        1:  169:    assertEquals(getCost(tribute),5, "Testing cost of tribute");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  170:}
+function testCostAmbassador called 1 returned 100% blocks executed 100%
+        1:  171:void testCostAmbassador()
+        -:  172:{
+        1:  173:    assertEquals(getCost(ambassador),3, "Testing cost of ambassador");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  174:}
+function testCostCutpurse called 1 returned 100% blocks executed 100%
+        1:  175:void testCostCutpurse()
+        -:  176:{
+        1:  177:    assertEquals(getCost(cutpurse),4, "Testing cost of cutpurse");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  178:}
+function testCostEmbargo called 1 returned 100% blocks executed 100%
+        1:  179:void testCostEmbargo() 
+        -:  180:{
+        1:  181:    assertEquals(getCost(embargo),2, "Testing cost of embargo");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  182:}
+function testCostOutpost called 1 returned 100% blocks executed 100%
+        1:  183:void testCostOutpost()
+        -:  184:{
+        1:  185:    assertEquals(getCost(outpost),5, "Testing cost of outpost");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  186:}
+function testCostSalvager called 1 returned 100% blocks executed 100%
+        1:  187:void testCostSalvager()
+        -:  188:{
+        1:  189:    assertEquals(getCost(salvager),4, "Testing cost of salvager");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  190:}
+function testCostSeaHag called 1 returned 100% blocks executed 100%
+        1:  191:void testCostSeaHag()
+        -:  192:{
+        1:  193:    assertEquals(getCost(sea_hag),4, "Testing cost of sea_hag");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  194:}
+function testCostTreasureMap called 1 returned 100% blocks executed 100%
+        1:  195:void testCostTreasureMap()
+        -:  196:{
+        1:  197:    assertEquals(getCost(treasure_map),4, "Testing cost of treasure_map");    
+call    0 returned 100%
+call    1 returned 100%
+        1:  198:}
+function testDefault called 1 returned 100% blocks executed 100%
+        1:  199:void testDefault()
+        -:  200:{
+        1:  201:    assertEquals(getCost(27),-1, "Testing cost of the default value");
+call    0 returned 100%
+call    1 returned 100%
+        1:  202:}
+        -:  203:
+function assertEquals called 28 returned 100% blocks executed 75%
+       28:  204:void assertEquals(int expected, int actual, char message[])
+        -:  205:{
+       28:  206:    printf("%s\n", message);
+call    0 returned 100%
+       28:  207:    fflush(stdout);
+call    0 returned 100%
+        -:  208:    
+       28:  209:    if(expected == actual)
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+        -:  210:    {
+       28:  211:        printf("****************TEST SUCCESSFULLY COMPLETED****************\n");
+call    0 returned 100%
+       28:  212:        fflush(stdout);
+call    0 returned 100%
+        -:  213:    }
+        -:  214:    else
+        -:  215:    {
+    #####:  216:        printf("************************TEST FAILED************************\n");
+call    0 never executed
+    #####:  217:        fflush(stdout);        
+call    0 never executed
+        -:  218:    }
+       28:  219:}

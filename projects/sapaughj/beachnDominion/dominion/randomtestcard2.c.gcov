@@ -1,0 +1,177 @@
+        -:    0:Source:randomtestcard2.c
+        -:    0:Graph:randomtestcard2.gcno
+        -:    0:Data:randomtestcard2.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/*
+        -:    2:* Author : Jacob Sapaugh
+        -:    3:*          Oregon State University
+        -:    4:*          CS 362
+        -:    5:*          08-04-2018
+        -:    6:*/
+        -:    7:
+        -:    8:#include "dominion.h"
+        -:    9:#include "dominion_helpers.h"
+        -:   10:#include "rngs.h"
+        -:   11:#include "interface.h"
+        -:   12:#include <stdio.h>
+        -:   13:#include <stdlib.h>
+        -:   14:#include <time.h>
+        -:   15:
+        -:   16:#define TEST_LOOPS 1000
+        -:   17:
+        -:   18:int assertEquals(int expected, int actual);
+        -:   19:void testVillage();
+        -:   20:int checkTreasureInDeck(struct gameState *state);
+        -:   21:int checkTreasureInHand(struct gameState *state);
+        -:   22:
+        -:   23:
+function main called 1 returned 100% blocks executed 100%
+        1:   24:int main(int argc, char* argv[]) 
+        -:   25:{
+        1:   26:    char functionUnderTest[] = "int cardEffect(...) villageEffect(...)";
+        -:   27:
+        1:   28:    printf("__________________________________________________________________\n");
+call    0 returned 100%
+        1:   29:    fflush(stdout);        
+call    0 returned 100%
+        1:   30:    printf("*******Begin testing of %s*******\n",functionUnderTest);
+call    0 returned 100%
+        1:   31:    fflush(stdout);        
+call    0 returned 100%
+        -:   32:    
+        1:   33:    testVillage();
+call    0 returned 100%
+        -:   34:    
+        1:   35:    printf("*******End testing of %s*******\n",functionUnderTest);
+call    0 returned 100%
+        1:   36:    fflush(stdout);        
+call    0 returned 100%
+        1:   37:    printf("__________________________________________________________________\n");
+call    0 returned 100%
+        1:   38:    fflush(stdout);        
+call    0 returned 100%
+        -:   39:	
+        1:   40:    return 0;
+        -:   41:}
+        -:   42:
+function testVillage called 1 returned 100% blocks executed 100%
+        1:   43:void testVillage()
+        -:   44:{
+        -:   45:	time_t t;
+        1:   46:	srand((unsigned) time(&t));
+call    0 returned 100%
+call    1 returned 100%
+        -:   47:	int i;
+        1:   48:	int k[10] = {adventurer, gardens, smithy, village, great_hall, council_room, ambassador, mine, cutpurse, salvager};
+        1:   49:	int kWithGoldSilverCopper[13] = {adventurer, gardens, smithy, village, great_hall, council_room, ambassador, mine, cutpurse, salvager, gold, silver, copper};
+        1:   50:	int correctHandDiffPlayerOne = 0;
+        1:   51:    int correctHandDiffPlayerTwo = 0;
+        1:   52:    int correctHandDiffPlayerThree = 0;
+        1:   53:    int correctTotalCardsPlayerOne = 0;
+        1:   54:	int playerOneActionsTimes = 0;
+        1:   55:	int correctNumberTimesPlayed = 0;
+        -:   56:	
+     1001:   57:    for(i = 0; i < TEST_LOOPS; i++)
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+        -:   58:    {
+        -:   59:        struct gameState state;
+     1000:   60:        int players = 3;
+     1000:   61:        int seed = 100;
+     1000:   62:        int handPos = 0;
+     1000:   63:        int bonus = 0;
+        -:   64:    	
+     1000:   65:        initializeGame(players, k, seed, &state);
+call    0 returned 100%
+        -:   66:    	int x;
+        -:   67:        //used 40 to fill the deck as it will provide plenty of cards to
+        -:   68:        //test each piece of the village effect function
+    41000:   69:        for(x = 0; x < 40; x++)
+branch  0 taken 98%
+branch  1 taken 2% (fallthrough)
+        -:   70:        {
+    40000:   71:        	state.deck[0][x] = kWithGoldSilverCopper[rand() % 13];
+call    0 returned 100%
+    40000:   72:        	state.hand[0][x] = kWithGoldSilverCopper[rand() % 13];
+call    0 returned 100%
+        -:   73:        }
+        -:   74:        
+        -:   75:        
+     1000:   76:        state.whoseTurn = 1;
+     1000:   77:        int handCountBeforePlayerTwo = numHandCards(&state);
+call    0 returned 100%
+        -:   78:    
+     1000:   79:        state.whoseTurn = 2;
+     1000:   80:        int handCountBeforePlayerThree = numHandCards(&state);
+call    0 returned 100%
+        -:   81:        
+     1000:   82:        state.whoseTurn = 0;
+     1000:   83:        int handCountBeforePlayerOne = numHandCards(&state);
+call    0 returned 100%
+     1000:   84:        int totalCardsBeforePlayerOne = state.deckCount[0] + state.discardCount[0] + state.handCount[0];
+     1000:   85:        int played =  cardEffect(village, 0, 0, 0, &state, handPos, &bonus);
+call    0 returned 100%
+        -:   86:        
+     1000:   87:        playerOneActionsTimes += assertEquals(2, state.numActions);
+call    0 returned 100%
+     1000:   88:        correctNumberTimesPlayed += assertEquals(0, played);
+call    0 returned 100%
+        -:   89:        
+     1000:   90:        int totalCardsAfterPlayerOne = state.deckCount[0] + state.discardCount[0] + state.handCount[0];
+        -:   91:        
+        -:   92:        //player 0 (player one's turn)
+     1000:   93:        int handDifferencePlayerOne = abs(numHandCards(&state) - handCountBeforePlayerOne);
+call    0 returned 100%
+        -:   94:        
+     1000:   95:        state.whoseTurn = 1;
+        -:   96:        //check next players hand count, make sure it is 0
+     1000:   97:        int handDifferencePlayerTwo = abs(numHandCards(&state)-handCountBeforePlayerTwo);
+call    0 returned 100%
+        -:   98:        
+     1000:   99:        state.whoseTurn = 2;
+        -:  100:        //check next players hand count, make sure it is 0
+     1000:  101:        int handDifferencePlayerThree = abs(numHandCards(&state)-handCountBeforePlayerThree);
+call    0 returned 100%
+        -:  102:        
+        -:  103:        //check hands of the active players
+     1000:  104:        correctHandDiffPlayerOne += assertEquals(2, handDifferencePlayerOne);
+call    0 returned 100%
+     1000:  105:        correctHandDiffPlayerTwo += assertEquals(0, handDifferencePlayerTwo);
+call    0 returned 100%
+     1000:  106:        correctHandDiffPlayerThree += assertEquals(0, handDifferencePlayerThree);
+call    0 returned 100%
+        -:  107:        
+        -:  108:        //make sure no cards were trashed
+     1000:  109:        correctTotalCardsPlayerOne += assertEquals(totalCardsBeforePlayerOne, totalCardsAfterPlayerOne);
+call    0 returned 100%
+        -:  110:    }
+        -:  111:    
+        1:  112:    printf("Correct number of actions after player one played adventurer card %d of %d times\n", playerOneActionsTimes, TEST_LOOPS);
+call    0 returned 100%
+        1:  113:	printf("cardEffect returned correctly %d of %d times\n", correctNumberTimesPlayed ,TEST_LOOPS);
+call    0 returned 100%
+        1:  114:	printf("Correct number of cards in player one's hand %d of %d times\n", correctHandDiffPlayerOne, TEST_LOOPS);
+call    0 returned 100%
+        1:  115:	printf("Correct number of cards in player two's hand %d of %d times\n", correctHandDiffPlayerTwo, TEST_LOOPS);
+call    0 returned 100%
+        1:  116:	printf("Correct number of cards in player three's hand %d of %d times\n", correctHandDiffPlayerThree, TEST_LOOPS);
+call    0 returned 100%
+        1:  117:	printf("Correct number of cards in player ones's hand+deck+discard %d of %d times\n", correctTotalCardsPlayerOne, TEST_LOOPS);
+call    0 returned 100%
+        1:  118:}
+        -:  119:
+function assertEquals called 6000 returned 100% blocks executed 100%
+     6000:  120:int assertEquals(int expected, int actual)
+        -:  121:{
+     6000:  122:    if(expected == actual)
+branch  0 taken 50% (fallthrough)
+branch  1 taken 50%
+        -:  123:    {
+     3000:  124:        return 1;
+        -:  125:    }
+        -:  126:    else
+        -:  127:    {
+     3000:  128:        return 0;
+        -:  129:    }
+        -:  130:}
