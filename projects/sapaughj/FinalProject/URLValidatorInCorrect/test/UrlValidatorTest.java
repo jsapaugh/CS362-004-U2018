@@ -26,8 +26,8 @@ import src.UrlValidator;
 public class UrlValidatorTest
 {
 	
-	@Rule
-	public ErrorCollector errorCollector = new ErrorCollector();
+   @Rule
+   public ErrorCollector errorCollector = new ErrorCollector();
 
    @Test
    public void testManualTest()
@@ -40,20 +40,29 @@ public class UrlValidatorTest
        System.out.println("Begin test " + methodName);
        List<TestPair> TestPairList = new ArrayList<TestPair>();
        TestPairList.add(new TestPair("http://google.com", true));
-       TestPairList.add(new TestPair("https:/www.google.com", true));
+       TestPairList.add(new TestPair("https:/www.google.com", false));
        TestPairList.add(new TestPair("ftp://google.com", true));
        TestPairList.add(new TestPair("http:/www.google.com", false));
        TestPairList.add(new TestPair("does.this._Work?:maybe", false));
        TestPairList.add(new TestPair("jacob://testing.com", false));
        TestPairList.add(new TestPair("https:/fail.com", false));
        TestPairList.add(new TestPair("htp://", false));
-       TestPairList.add(new TestPair("testing.com", true));
+       TestPairList.add(new TestPair("testing.com", false));
        TestPairList.add(new TestPair("testing.port.com:@/", false));
        TestPairList.add(new TestPair("http://testing.port.com:100/", true));
-       TestPairList.add(new TestPair("http://path.com:8080/@_path/", false));
+       TestPairList.add(new TestPair("http://path.com:8080/@_path/", true));
        TestPairList.add(new TestPair("http://path.com:8090/path", true));
        TestPairList.add(new TestPair("https://path.com:8090/query?this=that", true));
        TestPairList.add(new TestPair("ftp://path.com:100/query?test=space%20here", true));
+       TestPairList.add(new TestPair("https://www.dwheeler.com/essays/debugging-agans.html", true));
+       TestPairList.add(new TestPair("google.com", false));
+       TestPairList.add(new TestPair("www.google.com", false));
+       TestPairList.add(new TestPair("www.google.com:9080", false));
+       TestPairList.add(new TestPair("testing.port.com:100/", false));
+       TestPairList.add(new TestPair("path.com:8090/path", false));
+       TestPairList.add(new TestPair("path.com:8090/query?this=that", false));
+       TestPairList.add(new TestPair("path.com:100/query?test=space%20here", false));
+       TestPairList.add(new TestPair("dwheeler.com/essays/debugging-agans.html", false));
        boolean actual;
        boolean passed = true;
        for (TestPair TestPair : TestPairList) 
@@ -91,6 +100,91 @@ public class UrlValidatorTest
    public void testIsValid()
    {
 	   //You can use this function for programming based testing
-
+       
+              
    }
+   
+   TestPair[] testUrlScheme = 
+   {
+       new TestPair("http://", true),
+       new TestPair("ftp://", true),
+       new TestPair("h3t://", true),
+       new TestPair("3ht://", false),
+       new TestPair("http:/", false),
+       new TestPair("http:", false),
+       new TestPair("http/", false),
+       new TestPair("://", false),
+       new TestPair("", true)
+   };
+
+    TestPair[] testUrlAuthority = 
+    {
+        new TestPair("www.google.com", true),
+        new TestPair("go.com", true),
+        new TestPair("go.au", true),
+        new TestPair("0.0.0.0", true),
+        new TestPair("255.255.255.255", true),
+        new TestPair("256.256.256.256", false),
+        new TestPair("255.com", true),
+        new TestPair("1.2.3.4.5", false),
+        new TestPair("1.2.3.4.", false),
+        new TestPair("1.2.3", false),
+        new TestPair(".1.2.3.4", false),
+        new TestPair("go.a", false),
+        new TestPair("go.a1a", false),
+        new TestPair("go.1aa", false),
+        new TestPair("aaa.", false),
+        new TestPair(".aaa", false),
+        new TestPair("aaa", false),
+        new TestPair("", false)
+    };
+    TestPair[] testUrlPort = 
+    {
+        new TestPair(":80", true),
+        new TestPair(":65535", true),
+        new TestPair(":0", true),
+        new TestPair("", true),
+        new TestPair(":-1", false),
+        new TestPair(":65636",false),
+        new TestPair(":65a", false)
+    };
+    TestPair[] testPath = 
+    {
+        new TestPair("/test1", true),
+        new TestPair("/t123", true),
+        new TestPair("/$23", true),
+        new TestPair("/..", false),
+        new TestPair("/../", false),
+        new TestPair("/test1/", true),
+        new TestPair("", true),
+        new TestPair("/test1/file", true),
+        new TestPair("/..//file", false),
+        new TestPair("/test1//file", false)
+    };
+//Test allow2slash, noFragment
+    TestPair[] testUrlPathOptions = 
+    {
+        new TestPair("/test1", true),
+        new TestPair("/t123", true),
+        new TestPair("/$23", true),
+        new TestPair("/..", false),
+        new TestPair("/../", false),
+        new TestPair("/test1/", true),
+        new TestPair("/#", false),
+        new TestPair("", true),
+        new TestPair("/test1/file", true),
+        new TestPair("/t123/file", true),
+        new TestPair("/$23/file", true),
+        new TestPair("/../file", false),
+        new TestPair("/..//file", false),
+        new TestPair("/test1//file", true),
+        new TestPair("/#/file", false)
+    };
+
+    TestPair[] testUrlQuery = 
+    {
+        new TestPair("?action=view", true),
+        new TestPair("?action=edit&mode=up", true),
+        new TestPair("", true)
+    };
 }
