@@ -1,13 +1,8 @@
-package test;
-
 /*********************************************
  * Authors : Jacob Sapaugh, Noah Beach, Michele Larson
- **********************************************/
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-/*********************************************
- * Authors : Jacob Sapaugh, Noah Beach, Michele Larson
+ * Class : CS 362 Intro To Software Engineering II
+ * School : Oregon State University
+ * Date : 08/05/2018
  **********************************************/
 
 import java.util.ArrayList;
@@ -15,9 +10,8 @@ import java.util.List;
 
 import org.junit.Rule;
 import org.junit.Test;
+import static org.junit.Assert.*;
 import org.junit.rules.ErrorCollector;
-
-import src.UrlValidator;
 
 //You can use this as a skeleton for your 3 different test approach
 //It is an optional to use this file, you can generate your own test file(s) to test the target function!

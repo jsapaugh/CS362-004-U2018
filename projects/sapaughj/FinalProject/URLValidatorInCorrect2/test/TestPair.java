@@ -1,5 +1,9 @@
-package test;
-
+/*********************************************
+ * Authors : Jacob Sapaugh, Noah Beach, Michele Larson
+ * Class : CS 362 Intro To Software Engineering II
+ * School : Oregon State University
+ * Date : 08/05/2018
+ **********************************************/
 public class TestPair 
 {
     public String urlToTest;
