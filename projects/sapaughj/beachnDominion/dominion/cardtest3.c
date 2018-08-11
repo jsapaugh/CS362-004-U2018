@@ -18,7 +18,7 @@ void testVillage();
 
 int main(int argc, char* argv[]) 
 {
-    char functionUnderTest[] = "int cardEffect(...) villageEffect(...)";
+    char functionUnderTest[] = "int cardEffect(...) villageCard(...)";
 
     printf("__________________________________________________________________\n");
     fflush(stdout);        
@@ -58,7 +58,7 @@ void testVillage()
     int handCountBeforePlayerOne = numHandCards(&state);
     int totalCardsBeforePlayerOne = state.deckCount[0] + state.discardCount[0] + state.handCount[0];
     int played =  cardEffect(village, 0, 0, 0, &state, handPos, &bonus);
-    assertEquals(2, state.numActions, "Testing total number of actions after playing smithy");
+    assertEquals(2, state.numActions, "Testing total number of actions after playing village");
     assertEquals(0, played, "Testing return code on cardEffect(...)");
     
     int totalCardsAfterPlayerOne = state.deckCount[0] + state.discardCount[0] + state.handCount[0];

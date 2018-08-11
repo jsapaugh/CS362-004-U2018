@@ -147,7 +147,7 @@ call    0 returned 100%
 call    0 returned 100%
         -:  110:    }
         -:  111:    
-        1:  112:    printf("Correct number of actions after player one played adventurer card %d of %d times\n", playerOneActionsTimes, TEST_LOOPS);
+        1:  112:    printf("Correct number of actions after player one played village card %d of %d times\n", playerOneActionsTimes, TEST_LOOPS);
 call    0 returned 100%
         1:  113:	printf("cardEffect returned correctly %d of %d times\n", correctNumberTimesPlayed ,TEST_LOOPS);
 call    0 returned 100%

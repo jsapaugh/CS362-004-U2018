@@ -90,7 +90,7 @@ void testSmithy()
         //make sure no cards were trashed
         totalCardCountCorrect += assertEquals(totalCardsBefore, totalCardsAfter);
 	}
-	printf("Correct number of actions after player one played adventurer card %d of %d times\n", playerOneActionsTimes, TEST_LOOPS);
+	printf("Correct number of actions after player one played smithy card %d of %d times\n", playerOneActionsTimes, TEST_LOOPS);
 	printf("cardEffect returned correctly %d of %d times\n", correctNumberTimesPlayed ,TEST_LOOPS);
 	printf("Correct number of cards in player one's hand %d of %d times\n", handCountCorrect, TEST_LOOPS);
 	printf("Correct number of cards in player one's deck %d of %d times\n", deckCountCorrect, TEST_LOOPS);

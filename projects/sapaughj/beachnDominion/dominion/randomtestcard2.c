@@ -109,7 +109,7 @@ void testVillage()
         correctTotalCardsPlayerOne += assertEquals(totalCardsBeforePlayerOne, totalCardsAfterPlayerOne);
     }
     
-    printf("Correct number of actions after player one played adventurer card %d of %d times\n", playerOneActionsTimes, TEST_LOOPS);
+    printf("Correct number of actions after player one played village card %d of %d times\n", playerOneActionsTimes, TEST_LOOPS);
 	printf("cardEffect returned correctly %d of %d times\n", correctNumberTimesPlayed ,TEST_LOOPS);
 	printf("Correct number of cards in player one's hand %d of %d times\n", correctHandDiffPlayerOne, TEST_LOOPS);
 	printf("Correct number of cards in player two's hand %d of %d times\n", correctHandDiffPlayerTwo, TEST_LOOPS);

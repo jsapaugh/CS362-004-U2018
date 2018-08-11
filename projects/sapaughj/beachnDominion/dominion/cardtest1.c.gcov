@@ -23,7 +23,7 @@
 function main called 1 returned 100% blocks executed 100%
         1:   18:int main(int argc, char* argv[]) 
         -:   19:{
-        1:   20:    char functionUnderTest[] = "int cardEffect(...) smithyEffect(...)";
+        1:   20:    char functionUnderTest[] = "int cardEffect(...) smithyCard(...)";
         -:   21:
         1:   22:    printf("__________________________________________________________________\n");
 call    0 returned 100%

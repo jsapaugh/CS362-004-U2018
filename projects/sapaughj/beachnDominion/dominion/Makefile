@@ -114,6 +114,43 @@ randomtestadventurer.out: randomtestadventurer
 	
 randomall : randomtestadventurer.out randomtestcard2.out randomtestcard1.out
 
+alltests : unittest1 unittest2 unittest3 unittest4 cardtest1 cardtest2 cardtest3 cardtest4 randomtestadventurer randomtestcard2 randomtestcard1
+	./unittest1 > alltests.out
+	./unittest2 >> alltests.out
+	./unittest3 >> alltests.out
+	./unittest4 >> alltests.out
+	./cardtest1 >> alltests.out
+	./cardtest2 >> alltests.out
+	./cardtest3 >> alltests.out
+	./cardtest4 >> alltests.out
+	./randomtestcard1 >> alltests.out
+	./randomtestcard2 >> alltests.out
+	./randomtestadventurer >> alltests.out
+	gcov -b randomtestadventurer.c >> alltests.out
+	cat randomtestadventurer.c.gcov >> alltests.out	
+	gcov -b randomtestcard2.c >> alltests.out
+	cat randomtestcard2.c.gcov >> alltests.out
+	gcov -b randomtestcard1.c >> alltests.out
+	cat randomtestcard1.c.gcov >> alltests.out
+	gcov -b unittest1.c >> alltests.out
+	cat unittest1.c.gcov >> alltests.out     
+	gcov -b unittest2.c >> alltests.out
+	cat unittest2.c.gcov >> alltests.out
+	gcov -b unittest3.c >> alltests.out
+	cat unittest3.c.gcov >> alltests.out
+	gcov -b unittest4.c >> alltests.out
+	cat unittest4.c.gcov >> alltests.out
+	gcov -b cardtest1.c >> alltests.out
+	cat cardtest1.c.gcov >> alltests.out
+	gcov -b cardtest2.c >> alltests.out
+	cat cardtest2.c.gcov >> alltests.out
+	gcov -b cardtest3.c >> alltests.out
+	cat cardtest3.c.gcov >> alltests.out
+	gcov -b cardtest4.c >> alltests.out
+	cat cardtest4.c.gcov >> alltests.out
+	gcov -b dominion.c >> alltests.out
+	cat dominion.c.gcov >> alltests.out
+	
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 

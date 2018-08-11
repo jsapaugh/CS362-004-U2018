@@ -187,14 +187,14 @@ function assertEquals called 16000 returned 100% blocks executed 100%
         -:  133:{
         -:  134:    
     16000:  135:    if(expected == actual)
-branch  0 taken 50% (fallthrough)
-branch  1 taken 50%
+branch  0 taken 51% (fallthrough)
+branch  1 taken 49%
         -:  136:    {
-     8070:  137:    	return 1;
+     8084:  137:    	return 1;
         -:  138:    }
         -:  139:    else
         -:  140:    {
-     7930:  141:    	return 0;
+     7916:  141:    	return 0;
         -:  142:    }
         -:  143:}
         -:  144:
@@ -205,11 +205,11 @@ function checkTreasureInHand called 4000 returned 100% blocks executed 100%
      4000:  148:    int count = 0;
      4000:  149:	int currentPlayer = state->whoseTurn;
         -:  150:    int i;
-    24270:  151:    for (i = 0; i < state->handCount[currentPlayer]; i++) 
-branch  0 taken 84%
-branch  1 taken 16% (fallthrough)
+    24133:  151:    for (i = 0; i < state->handCount[currentPlayer]; i++) 
+branch  0 taken 83%
+branch  1 taken 17% (fallthrough)
         -:  152:    {
-    20270:  153:        if(state->hand[currentPlayer][i] == copper || state->hand[currentPlayer][i] == silver || state->hand[currentPlayer][i] == gold) 
+    20133:  153:        if(state->hand[currentPlayer][i] == copper || state->hand[currentPlayer][i] == silver || state->hand[currentPlayer][i] == gold) 
 branch  0 taken 90% (fallthrough)
 branch  1 taken 10%
 branch  2 taken 89% (fallthrough)
@@ -217,7 +217,7 @@ branch  3 taken 11%
 branch  4 taken 13% (fallthrough)
 branch  5 taken 87%
         -:  154:        {
-     6124:  155:                count++;
+     6140:  155:                count++;
         -:  156:        }
         -:  157:    }
      4000:  158:    return count;
@@ -229,11 +229,11 @@ function checkTreasureInDeck called 4000 returned 100% blocks executed 100%
      4000:  163:    int count = 0;
      4000:  164:	int currentPlayer = state->whoseTurn;
         -:  165:    int i;
-    17773:  166:    for (i = 0; i < state->deckCount[currentPlayer]; i++) 
+    17627:  166:    for (i = 0; i < state->deckCount[currentPlayer]; i++) 
 branch  0 taken 77%
 branch  1 taken 23% (fallthrough)
         -:  167:    {
-    13773:  168:        if(state->deck[currentPlayer][i] == copper || state->deck[currentPlayer][i] == silver || state->deck[currentPlayer][i] == gold) 
+    13627:  168:        if(state->deck[currentPlayer][i] == copper || state->deck[currentPlayer][i] == silver || state->deck[currentPlayer][i] == gold) 
 branch  0 taken 92% (fallthrough)
 branch  1 taken 8%
 branch  2 taken 92% (fallthrough)
@@ -241,7 +241,7 @@ branch  3 taken 8%
 branch  4 taken 9% (fallthrough)
 branch  5 taken 91%
         -:  169:        {
-     3218:  170:                count++;
+     3084:  170:                count++;
         -:  171:        }
         -:  172:    }
      4000:  173:    return count;

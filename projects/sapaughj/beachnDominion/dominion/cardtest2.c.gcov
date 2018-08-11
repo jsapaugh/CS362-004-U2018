@@ -23,7 +23,7 @@
 function main called 1 returned 100% blocks executed 100%
         1:   18:int main(int argc, char* argv[]) 
         -:   19:{
-        1:   20:    char functionUnderTest[] = "int cardEffect(...) adventurerEffect(...)";
+        1:   20:    char functionUnderTest[] = "int cardEffect(...) adventurerCard(...)";
         -:   21:
         1:   22:    printf("__________________________________________________________________\n");
 call    0 returned 100%
@@ -79,7 +79,7 @@ call    0 returned 100%
         1:   59:    int played =  cardEffect(adventurer, 0, 0, 0, &state, handPos, &bonus);
 call    0 returned 100%
         -:   60:    
-        1:   61:    assertEquals(0, state.numActions, "Testing total number of actions after playing smithy");
+        1:   61:    assertEquals(0, state.numActions, "Testing total number of actions after playing adventurer");
 call    0 returned 100%
         1:   62:    assertEquals(0, played, "Testing return code on cardEffect(...)");
 call    0 returned 100%

@@ -124,7 +124,7 @@ call    0 returned 100%
      1500:   91:        totalCardCountCorrect += assertEquals(totalCardsBefore, totalCardsAfter);
 call    0 returned 100%
         -:   92:	}
-        1:   93:	printf("Correct number of actions after player one played adventurer card %d of %d times\n", playerOneActionsTimes, TEST_LOOPS);
+        1:   93:	printf("Correct number of actions after player one played smithy card %d of %d times\n", playerOneActionsTimes, TEST_LOOPS);
 call    0 returned 100%
         1:   94:	printf("cardEffect returned correctly %d of %d times\n", correctNumberTimesPlayed ,TEST_LOOPS);
 call    0 returned 100%

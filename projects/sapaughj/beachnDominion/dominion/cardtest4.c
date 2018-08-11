@@ -17,7 +17,7 @@ void testGardens();
 
 int main(int argc, char* argv[]) 
 {
-    char functionUnderTest[] = "int cardEffect(...) gardensEffect(...)";
+    char functionUnderTest[] = "int cardEffect(...) -> case gardens";
 
     printf("__________________________________________________________________\n");
     fflush(stdout);        

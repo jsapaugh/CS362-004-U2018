@@ -17,7 +17,7 @@ void testSmithy();
 
 int main(int argc, char* argv[]) 
 {
-    char functionUnderTest[] = "int cardEffect(...) smithyEffect(...)";
+    char functionUnderTest[] = "int cardEffect(...) smithyCard(...)";
 
     printf("__________________________________________________________________\n");
     fflush(stdout);        
