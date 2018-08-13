@@ -6,10 +6,6 @@ package test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/*********************************************
- * Authors : Jacob Sapaugh, Noah Beach, Michele Larson
- **********************************************/
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -38,7 +34,7 @@ public class UrlValidatorTest
 
         //You can use this function to implement your manual testing
         String methodName = "testManualTest()";
-        System.out.println("Begin test " + methodName);
+        System.err.println("Begin test " + methodName);
         List<TestPair> TestPairList = new ArrayList<TestPair>();
         TestPairList.add(new TestPair("http://google.com", true));
         TestPairList.add(new TestPair("https:/www.google.com", false));
@@ -85,6 +81,84 @@ public class UrlValidatorTest
     }
 
     @Test
+    public void shouldAllowAllSchemes()
+    {
+        //all schemes allowed
+        //passing in allow all schemes so that http:// ftp:// etc don't fail
+        UrlValidator urlValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+        
+        //test fails with many URLs
+        //due to a thrown IllegalArgumentException which is
+        //related to a bug on line 121 in the RegexValidator class
+        //public RegexValidator(String[] regexs, boolean caseSensitive) {
+        //  if (regexs != null || regexs.length == 0) 
+        //  {
+        //      throw new IllegalArgumentException("Regular expressions are missing");
+        //  }
+        //any regex string that is not null will throw the exception
+        //added try catch around .isValid method call to have test continue
+        
+        //You can use this function to implement your manual testing
+        String methodName = "shouldAllowAllSchemes()";
+        System.err.println("Begin test " + methodName);
+        List<TestPair> TestPairList = new ArrayList<TestPair>();
+        TestPairList.add(new TestPair("http://google.com", true));
+        TestPairList.add(new TestPair("https:/www.google.com", false));
+        TestPairList.add(new TestPair("ftp://google.com", true));
+        TestPairList.add(new TestPair("http:/www.google.com", false));
+        TestPairList.add(new TestPair("does.this._Work?:maybe", false));
+        TestPairList.add(new TestPair("jacob://testing.com", false));
+        TestPairList.add(new TestPair("https:/fail.com", false));
+        TestPairList.add(new TestPair("htp://", false));
+        TestPairList.add(new TestPair("testing.com", false));
+        TestPairList.add(new TestPair("testing.port.com:@/", false));
+        TestPairList.add(new TestPair("http://testing.port.com:100/", true));
+        TestPairList.add(new TestPair("http://path.com:8080/@_path/", true));
+        TestPairList.add(new TestPair("http://path.com:8090/path", true));
+        TestPairList.add(new TestPair("https://path.com:8090/query?this=that", true));
+        TestPairList.add(new TestPair("ftp://path.com:100/query?test=space%20here", true));
+        TestPairList.add(new TestPair("https://www.dwheeler.com/essays/debugging-agans.html", true));
+        TestPairList.add(new TestPair("google.com", false));
+        TestPairList.add(new TestPair("www.google.com", false));
+        TestPairList.add(new TestPair("www.google.com:9080", false));
+        TestPairList.add(new TestPair("testing.port.com:100/", false));
+        TestPairList.add(new TestPair("path.com:8090/path", false));
+        TestPairList.add(new TestPair("path.com:8090/query?this=that", false));
+        TestPairList.add(new TestPair("path.com:100/query?test=space%20here", false));
+        TestPairList.add(new TestPair("dwheeler.com/essays/debugging-agans.html", false));
+        
+        boolean actual = false;
+        boolean passed = true;
+        for (TestPair TestPair : TestPairList) 
+        {
+            try
+            {
+                actual = urlValidator.isValid(TestPair.getUrlToTest());
+            }
+            catch (Throwable t)
+            {
+                errorCollector.addError(t);
+                System.err.println("Url " + TestPair.getUrlToTest() + " failed due to : " + t.getMessage());
+                passed = false;
+                continue;
+            }
+            
+            //try catch so if it fails, will continue and can print out all at the end
+            try
+            {
+                assertEquals("Url " + TestPair.getUrlToTest() + " tested ", TestPair.getValidity(), actual);
+            }
+            catch (Throwable t)
+            {
+                errorCollector.addError(t);
+                System.err.println(t.getMessage());
+                passed = false;
+            }
+        }
+        assertTrue("Overall status is fail for test, check logs for details", passed);
+    }
+    
+    @Test
     public void testYourFirstPartition()
     {
         //You can use this function to implement your First Partition testing
@@ -102,7 +176,7 @@ public class UrlValidatorTest
     {
         //You can use this function for programming based testing
         String methodName = "testIsValid()";
-        System.out.println("Begin test " + methodName);
+        System.err.println("Begin test " + methodName);
 
         //default schemas allowed
         UrlValidator urlValidator = new UrlValidator();
