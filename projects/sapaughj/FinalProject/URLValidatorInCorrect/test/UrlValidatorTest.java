@@ -158,15 +158,83 @@ public class UrlValidatorTest
         assertTrue("Overall status is fail for test, check logs for details", passed);
     }
     
+    // Test schemes partition
     @Test
-    public void testYourFirstPartition()
-    {
-        //You can use this function to implement your First Partition testing
+    public void testSchemePartition()
+    {     
+
+    	//You can use this function to implement your manual testing
+
+        String[] schemesToTest = {"http", "https", "ftp"};
+        UrlValidator urlValidator = new UrlValidator(schemesToTest);
+        
+        String methodName = "testSchemePartition()";
+        System.err.println("Begin test " + methodName);
+        List<TestPair> TestPairList = new ArrayList<TestPair>();
+        TestPairList.add(new TestPair("http://google.com", true));
+        TestPairList.add(new TestPair("https://www.google.com", true));
+        TestPairList.add(new TestPair("ftp://www.google.com", true));
+        TestPairList.add(new TestPair("file://www.google.com", false));
+        TestPairList.add(new TestPair("blah://www.google.com", false));
+        TestPairList.add(new TestPair("htp://www.google.com", false));
+        
+        boolean actual;
+        boolean passed = true;
+        for (TestPair TestPair : TestPairList)
+        {
+            actual = urlValidator.isValid(TestPair.getUrlToTest());
+            //try catch so if it fails, will continue and can print out all at the end
+            try
+            {
+                assertEquals("Url " + TestPair.getUrlToTest() + " tested ", TestPair.getValidity(), actual);
+            }
+            catch (Throwable t)
+            {
+                errorCollector.addError(t);
+                System.err.println(t.getMessage());
+                passed = false;
+            }
+        }
+        assertTrue("Overall status is fail for test, check logs for details", passed);
+ 
     }
 
+    // Test IPv4 address partition
     @Test
-    public void testYourSecondPartition(){
+    public void testIPv4Partition(){
         //You can use this function to implement your Second Partition testing
+    	UrlValidator urlValidator = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+    	
+    	String methodName = "testIPv4Partition()";
+        System.err.println("Begin test " + methodName);
+        List<TestPair> TestPairList = new ArrayList<TestPair>();
+        TestPairList.add(new TestPair("http://192.168.1.1", true));
+        TestPairList.add(new TestPair("http://8.8.8.8", true));
+        TestPairList.add(new TestPair("http://255.255.255.255", true));
+        TestPairList.add(new TestPair("http://0.0.0.0", true));
+        TestPairList.add(new TestPair("http://256.255.255.255", false));
+        TestPairList.add(new TestPair("http://a.b.c.d", false));
+        TestPairList.add(new TestPair("http://1.2.3.4", true));
+        TestPairList.add(new TestPair("http://1.2.3.a4", false));
+        
+        boolean actual;
+        boolean passed = true;
+        for (TestPair TestPair : TestPairList)
+        {
+            actual = urlValidator.isValid(TestPair.getUrlToTest());
+            //try catch so if it fails, will continue and can print out all at the end
+            try
+            {
+                assertEquals("Url " + TestPair.getUrlToTest() + " tested ", TestPair.getValidity(), actual);
+            }
+            catch (Throwable t)
+            {
+                errorCollector.addError(t);
+                System.err.println(t.getMessage());
+                passed = false;
+            }
+        }
+        assertTrue("Overall status is fail for test, check logs for details", passed);
 
     }
     //You need to create more test cases for your Partitions if you need to
